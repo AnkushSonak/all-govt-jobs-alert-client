@@ -75,7 +75,7 @@ const Index = () => {
   const filteredJobs = mockJobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          job.department.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesState = !selectedState || job.location.includes(selectedState);
+    const matchesState = !selectedState || selectedState === "all" || job.location.includes(selectedState);
     const matchesCategory = !selectedCategory || job.category === selectedCategory;
     
     return matchesSearch && matchesState && matchesCategory;
@@ -131,7 +131,7 @@ const Index = () => {
                     <SelectValue placeholder="Select State" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All States</SelectItem>
+                    <SelectItem value="all">All States</SelectItem>
                     <SelectItem value="Delhi">Delhi</SelectItem>
                     <SelectItem value="Maharashtra">Maharashtra</SelectItem>
                     <SelectItem value="Karnataka">Karnataka</SelectItem>
