@@ -1,11 +1,11 @@
-
 import { useState } from "react";
-import { Search, MapPin, Calendar, Building2, Users, TrendingUp, Filter, Star, Clock, ChevronRight } from "lucide-react";
+import { Search, MapPin, Calendar, Building2, Users, TrendingUp, Filter, Star, Clock, ChevronRight, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { JobCard } from "@/components/JobCard";
 import { FilterSection } from "@/components/FilterSection";
 import { StatsSection } from "@/components/StatsSection";
@@ -73,6 +73,7 @@ const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const filteredJobs = mockJobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -266,29 +267,65 @@ const Index = () => {
         {/* Latest Jobs Section */}
         <section className="py-16 bg-white" aria-label="Latest government jobs">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row gap-8">
-              {/* Enhanced Filters Sidebar */}
-              <aside className="md:w-1/4" aria-label="Job filters">
-                <div className="sticky top-6">
-                  <Card className="shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Mobile Filter Trigger */}
+              <div className="lg:hidden">
+                <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" className="w-full mb-6">
+                      <Menu className="h-4 w-4 mr-2" />
+                      Filter Jobs
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="w-80">
+                    <SheetHeader>
+                      <SheetTitle className="flex items-center gap-2">
                         <Filter className="h-5 w-5" />
                         Filter Jobs
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
+                      </SheetTitle>
+                    </SheetHeader>
+                    <div className="mt-6">
                       <FilterSection 
                         selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
                       />
-                    </CardContent>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
+
+              {/* Desktop Sidebar with Toggle */}
+              <aside className="hidden lg:block lg:w-1/4" aria-label="Job filters">
+                <div className="sticky top-6">
+                  <Card className="shadow-lg">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                      <CardTitle className="flex items-center gap-2">
+                        <Filter className="h-5 w-5" />
+                        Filter Jobs
+                      </CardTitle>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setIsFilterOpen(!isFilterOpen)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Menu className="h-4 w-4" />
+                      </Button>
+                    </CardHeader>
+                    {!isFilterOpen && (
+                      <CardContent>
+                        <FilterSection 
+                          selectedCategory={selectedCategory}
+                          setSelectedCategory={setSelectedCategory}
+                        />
+                      </CardContent>
+                    )}
                   </Card>
                 </div>
               </aside>
 
               {/* Enhanced Jobs Listing */}
-              <main className="md:w-3/4">
+              <main className={`${isFilterOpen ? 'lg:w-full' : 'lg:w-3/4'} transition-all duration-300`}>
                 <div className="flex justify-between items-center mb-8">
                   <div>
                     <h3 className="text-3xl font-bold text-gray-900">Latest Government Jobs</h3>
