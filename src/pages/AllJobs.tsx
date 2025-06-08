@@ -70,7 +70,8 @@ const allJobs = [
 const AllJobs = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isDesktopFilterOpen, setIsDesktopFilterOpen] = useState(true);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const filteredJobs = allJobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,23 +91,23 @@ const AllJobs = () => {
       />
       
       <div className="min-h-screen bg-gray-50 text-sm">
-        {/* Header */}
+        {/* Header - Improved Mobile */}
         <header className="bg-white shadow-md border-b">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <Link to="/" className="flex items-center space-x-3">
                 <div className="bg-blue-600 p-2 rounded-lg">
-                  <svg className="h-6 w-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="h-5 md:h-6 w-5 md:w-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
                   </svg>
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">GovJobs Portal</h1>
+                  <h1 className="text-lg md:text-xl font-bold text-gray-900">GovJobs Portal</h1>
                   <p className="text-gray-500 text-xs">Your Gateway to Government Careers</p>
                 </div>
               </Link>
 
-              <div className="flex-1 max-w-2xl mx-8">
+              <div className="flex-1 md:max-w-2xl md:mx-8">
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
@@ -118,34 +119,57 @@ const AllJobs = () => {
                 </div>
               </div>
 
-              <nav className="hidden md:flex space-x-6 text-sm">
+              <nav className="hidden lg:flex space-x-6 text-sm">
                 <Link to="/" className="text-gray-600 hover:text-blue-600">Home</Link>
                 <Link to="/jobs" className="text-blue-600 font-medium">All Jobs</Link>
                 <Link to="/categories" className="text-gray-600 hover:text-blue-600">Categories</Link>
                 <Link to="/states" className="text-gray-600 hover:text-blue-600">States</Link>
               </nav>
+
+              {/* Mobile Menu */}
+              <div className="lg:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" size="sm" className="text-sm">
+                      <Menu className="h-4 w-4 mr-2" />
+                      Menu
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="right" className="w-72">
+                    <SheetHeader>
+                      <SheetTitle>Navigation</SheetTitle>
+                    </SheetHeader>
+                    <nav className="flex flex-col space-y-4 mt-6">
+                      <Link to="/" className="text-gray-600 hover:text-blue-600 px-2 py-2">Home</Link>
+                      <Link to="/jobs" className="text-blue-600 font-medium px-2 py-2">All Jobs</Link>
+                      <Link to="/categories" className="text-gray-600 hover:text-blue-600 px-2 py-2">Categories</Link>
+                      <Link to="/states" className="text-gray-600 hover:text-blue-600 px-2 py-2">States</Link>
+                    </nav>
+                  </SheetContent>
+                </Sheet>
+              </div>
             </div>
           </div>
         </header>
 
-        {/* Page Header */}
-        <section className="py-8 bg-white border-b">
+        {/* Page Header - Better Mobile */}
+        <section className="py-6 md:py-8 bg-white border-b">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">All Government Jobs</h2>
-            <p className="text-gray-600">Complete list of available government job opportunities</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">All Government Jobs</h2>
+            <p className="text-gray-600 text-sm md:text-base">Complete list of available government job opportunities</p>
           </div>
         </section>
 
         {/* Jobs Section */}
-        <section className="py-8">
+        <section className="py-6 md:py-8">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
               {/* Mobile Filter */}
               <div className="lg:hidden">
-                <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+                <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
                   <SheetTrigger asChild>
                     <Button variant="outline" className="w-full mb-4 text-sm">
-                      <Menu className="h-4 w-4 mr-2" />
+                      <Filter className="h-4 w-4 mr-2" />
                       Filter Jobs
                     </Button>
                   </SheetTrigger>
@@ -166,36 +190,46 @@ const AllJobs = () => {
                 </Sheet>
               </div>
 
-              {/* Desktop Filter */}
-              <aside className="hidden lg:block lg:w-1/4">
+              {/* Desktop Filter with Toggle - Same as Home Page */}
+              <aside className={`hidden lg:block transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-1/4' : 'lg:w-auto'}`}>
                 <div className="sticky top-6">
                   <Card className="shadow-sm border-gray-200">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2 text-base">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                      <CardTitle className={`flex items-center gap-2 text-sm transition-all duration-300 ${!isDesktopFilterOpen ? 'hidden' : ''}`}>
                         <Filter className="h-4 w-4" />
                         Filter Jobs
                       </CardTitle>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setIsDesktopFilterOpen(!isDesktopFilterOpen)}
+                        className="h-8 w-8 p-0 hover:bg-gray-100 transition-all duration-200"
+                      >
+                        <Menu className="h-4 w-4" />
+                      </Button>
                     </CardHeader>
-                    <CardContent>
-                      <FilterSection 
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
-                      />
-                    </CardContent>
+                    {isDesktopFilterOpen && (
+                      <CardContent className="animate-fade-in">
+                        <FilterSection 
+                          selectedCategory={selectedCategory}
+                          setSelectedCategory={setSelectedCategory}
+                        />
+                      </CardContent>
+                    )}
                   </Card>
                 </div>
               </aside>
 
               {/* Jobs List */}
-              <main className="lg:w-3/4">
-                <div className="flex justify-between items-center mb-6">
-                  <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-100 px-3 py-2 rounded-lg">
-                    <Users className="h-3 w-3" />
+              <main className={`transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-3/4' : 'lg:w-full'}`}>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-3">
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600 bg-gray-100 px-3 py-2 rounded-lg">
+                    <Users className="h-3 md:h-4 w-3 md:w-4" />
                     <span>{filteredJobs.length} jobs found</span>
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   {filteredJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                   ))}

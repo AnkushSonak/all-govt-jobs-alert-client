@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { MapPin, Calendar, Building2, Users, Filter, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -103,6 +102,8 @@ const Index = () => {
     return matchesSearch && matchesState && matchesCategory;
   });
 
+  const displayedJobs = filteredJobs.slice(0, 15);
+
   const pageTitle = "Latest Government Jobs 2025 - Banking, Railways, SSC, UPSC | GovJobs Portal";
   const pageDescription = "Find latest government job notifications across India. 500+ current openings in Banking, Railways, SSC, UPSC, and State Government jobs with official application links.";
 
@@ -142,10 +143,10 @@ const Index = () => {
       />
       
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-sm">
-        {/* Enhanced Header with Search */}
+        {/* Enhanced Header with Search - Improved Mobile */}
         <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b border-slate-200 sticky top-0 z-40 animate-fade-in" role="banner">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex items-center space-x-3 animate-fade-in">
                 <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-2 rounded-lg shadow-sm">
                   <Building2 className="h-5 w-5 text-white" />
@@ -158,8 +159,8 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* Enhanced Search in Header */}
-              <div className="flex-1 max-w-2xl mx-6 animate-slide-in-right">
+              {/* Enhanced Search in Header - Better Mobile Layout */}
+              <div className="flex-1 md:max-w-2xl md:mx-6 animate-slide-in-right">
                 <SearchBar 
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
@@ -167,7 +168,7 @@ const Index = () => {
                 />
               </div>
 
-              <nav className="hidden md:flex space-x-4 text-sm animate-fade-in" role="navigation" aria-label="Main navigation">
+              <nav className="hidden lg:flex space-x-4 text-sm animate-fade-in" role="navigation" aria-label="Main navigation">
                 <Link to="/" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-1 rounded hover:bg-slate-50">Home</Link>
                 <Link to="/jobs" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-1 rounded hover:bg-slate-50">All Jobs</Link>
                 <Link to="/categories" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-1 rounded hover:bg-slate-50">Categories</Link>
@@ -175,24 +176,49 @@ const Index = () => {
                 <Link to="/admit-cards" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-1 rounded hover:bg-slate-50">Admit Cards</Link>
                 <Link to="/results" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-1 rounded hover:bg-slate-50">Results</Link>
               </nav>
+
+              {/* Mobile Navigation Menu */}
+              <div className="lg:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="outline" size="sm" className="text-sm">
+                      <Menu className="h-4 w-4 mr-2" />
+                      Menu
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="right" className="w-72">
+                    <SheetHeader>
+                      <SheetTitle>Navigation</SheetTitle>
+                    </SheetHeader>
+                    <nav className="flex flex-col space-y-4 mt-6">
+                      <Link to="/" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-2 rounded hover:bg-slate-50">Home</Link>
+                      <Link to="/jobs" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-2 rounded hover:bg-slate-50">All Jobs</Link>
+                      <Link to="/categories" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-2 rounded hover:bg-slate-50">Categories</Link>
+                      <Link to="/states" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-2 rounded hover:bg-slate-50">States</Link>
+                      <Link to="/admit-cards" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-2 rounded hover:bg-slate-50">Admit Cards</Link>
+                      <Link to="/results" className="text-slate-600 hover:text-blue-600 transition-all duration-200 px-2 py-2 rounded hover:bg-slate-50">Results</Link>
+                    </nav>
+                  </SheetContent>
+                </Sheet>
+              </div>
             </div>
           </div>
         </header>
 
-        {/* Hero Section with Animation */}
-        <section className="py-12 bg-gradient-to-r from-blue-50 via-white to-slate-50 relative overflow-hidden" role="main">
+        {/* Hero Section with Animation - Better Mobile */}
+        <section className="py-8 md:py-12 bg-gradient-to-r from-blue-50 via-white to-slate-50 relative overflow-hidden" role="main">
           <div className="absolute inset-0 opacity-20" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
           }}></div>
           <div className="container mx-auto px-4 relative">
-            <div className="text-center mb-8 animate-fade-in">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 animate-slide-in-up">
+            <div className="text-center mb-6 md:mb-8 animate-fade-in">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 animate-slide-in-up">
                 Find Your Dream Government Job
               </h2>
-              <p className="text-slate-600 mb-6 max-w-2xl mx-auto text-base animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <p className="text-slate-600 mb-4 md:mb-6 max-w-2xl mx-auto text-sm md:text-base animate-fade-in px-4" style={{ animationDelay: '0.2s' }}>
                 Discover the latest government job opportunities across India with official notifications and application links.
               </p>
-              <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium border border-green-200 animate-bounce-gentle">
+              <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium border border-green-200 animate-bounce-gentle">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 2,450+ Active Positions Available
               </div>
@@ -200,21 +226,21 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Featured Categories Section with Animation */}
-        <section className="py-8 bg-white/50 backdrop-blur-sm border-b border-slate-100">
+        {/* Featured Categories Section with Animation - Better Mobile Grid */}
+        <section className="py-6 md:py-8 bg-white/50 backdrop-blur-sm border-b border-slate-100">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-6 animate-fade-in">
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Popular Categories</h3>
-              <p className="text-slate-600 text-sm">Browse jobs by category</p>
+            <div className="text-center mb-4 md:mb-6 animate-fade-in">
+              <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-2">Popular Categories</h3>
+              <p className="text-slate-600 text-xs md:text-sm">Browse jobs by category</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
               {featuredCategories.map((category, index) => (
                 <Link to={`/categories/${category.slug}`} key={index}>
                   <Card className="cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg border border-slate-200 bg-white/80 backdrop-blur-sm group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl mb-2 group-hover:scale-110 transition-transform duration-200">{category.icon}</div>
-                      <h4 className="font-semibold text-sm mb-1 text-slate-900">{category.name}</h4>
+                    <CardContent className="p-3 md:p-4 text-center">
+                      <div className="text-xl md:text-2xl mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-200">{category.icon}</div>
+                      <h4 className="font-semibold text-xs md:text-sm mb-1 text-slate-900">{category.name}</h4>
                       <p className="text-xs text-slate-500">{category.count} Jobs</p>
                     </CardContent>
                   </Card>
@@ -226,12 +252,12 @@ const Index = () => {
 
         {/* Search Results Indicator */}
         {searchPerformed && searchTerm && (
-          <section className="py-4 bg-blue-50 border-b border-blue-100 animate-fade-in" id="search-results">
+          <section className="py-3 md:py-4 bg-blue-50 border-b border-blue-100 animate-fade-in" id="search-results">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-center gap-2 text-blue-700">
                 <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                <p className="text-sm font-medium">
-                  Showing {filteredJobs.length} results for "{searchTerm}"
+                <p className="text-xs md:text-sm font-medium">
+                  Showing {displayedJobs.length} of {filteredJobs.length} results for "{searchTerm}"
                 </p>
                 <Button 
                   variant="ghost" 
@@ -249,10 +275,10 @@ const Index = () => {
           </section>
         )}
 
-        {/* Latest Jobs Section */}
-        <section className="py-8 bg-gradient-to-b from-slate-50 to-white" aria-label="Latest government jobs">
+        {/* Latest Jobs Section - Better Mobile Layout */}
+        <section className="py-6 md:py-8 bg-gradient-to-b from-slate-50 to-white" aria-label="Latest government jobs">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
               {/* Mobile Filter Trigger */}
               <div className="lg:hidden animate-fade-in">
                 <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
@@ -311,39 +337,47 @@ const Index = () => {
 
               {/* Enhanced Jobs Listing */}
               <main className={`transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-3/4' : 'lg:w-full'}`}>
-                <div className="flex justify-between items-center mb-6 animate-fade-in">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 animate-fade-in gap-3">
                   <div>
-                    <h3 className="text-xl font-bold text-slate-900">Latest Government Jobs</h3>
-                    <p className="text-slate-600 mt-1 text-sm">Fresh opportunities updated daily</p>
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900">Latest Government Jobs</h3>
+                    <p className="text-slate-600 mt-1 text-xs md:text-sm">Fresh opportunities updated daily</p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 text-sm text-slate-600 bg-white/90 backdrop-blur-sm border border-slate-200 px-3 py-2 rounded-lg shadow-sm">
-                      <Users className="h-4 w-4" />
-                      <span>{filteredJobs.length} jobs found</span>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                    <div className="flex items-center gap-2 text-xs md:text-sm text-slate-600 bg-white/90 backdrop-blur-sm border border-slate-200 px-3 py-2 rounded-lg shadow-sm">
+                      <Users className="h-3 md:h-4 w-3 md:w-4" />
+                      <span>{displayedJobs.length} jobs shown</span>
                     </div>
-                    <Link to="/jobs">
-                      <Button variant="outline" size="sm" className="text-sm border-slate-200 hover:bg-slate-100 transition-all duration-200 hover:shadow-md">
-                        View All Jobs
-                      </Button>
-                    </Link>
                   </div>
                 </div>
 
-                <div className="space-y-4" role="list" aria-label="Job listings">
-                  {filteredJobs.map((job, index) => (
+                <div className="space-y-3 md:space-y-4" role="list" aria-label="Job listings">
+                  {displayedJobs.map((job, index) => (
                     <article key={job.id} role="listitem" className="group animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
                       <JobCard job={job} />
                     </article>
                   ))}
                 </div>
 
-                {filteredJobs.length === 0 && (
-                  <div className="text-center py-16 animate-fade-in">
-                    <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce-gentle">
-                      <Building2 className="h-10 w-10 text-slate-400" />
+                {/* View All Jobs Button */}
+                {filteredJobs.length > 15 && (
+                  <div className="text-center mt-6 md:mt-8 animate-fade-in">
+                    <Link to="/jobs">
+                      <Button 
+                        className="bg-blue-600 hover:bg-blue-700 text-sm md:text-base px-6 md:px-8 py-2 md:py-3 transition-all duration-200 hover:shadow-lg"
+                      >
+                        View All {filteredJobs.length} Jobs
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+
+                {displayedJobs.length === 0 && (
+                  <div className="text-center py-12 md:py-16 animate-fade-in">
+                    <div className="w-16 md:w-20 h-16 md:h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 animate-bounce-gentle">
+                      <Building2 className="h-8 md:h-10 w-8 md:w-10 text-slate-400" />
                     </div>
-                    <h4 className="text-xl font-semibold text-slate-900 mb-3">No jobs found</h4>
-                    <p className="text-slate-500 text-sm mb-6 max-w-md mx-auto">
+                    <h4 className="text-lg md:text-xl font-semibold text-slate-900 mb-3">No jobs found</h4>
+                    <p className="text-slate-500 text-sm mb-4 md:mb-6 max-w-md mx-auto px-4">
                       We couldn't find any jobs matching your criteria. Try adjusting your filters or search terms.
                     </p>
                     <Button 
@@ -364,29 +398,29 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Enhanced Footer */}
-        <footer className="bg-slate-900 text-white py-12 relative overflow-hidden" role="contentinfo">
+        {/* Enhanced Footer - Better Mobile */}
+        <footer className="bg-slate-900 text-white py-8 md:py-12 relative overflow-hidden" role="contentinfo">
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900"></div>
           <div className="container mx-auto px-4 relative">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-              <div className="animate-fade-in">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-6 md:mb-8">
+              <div className="animate-fade-in col-span-1 sm:col-span-2 lg:col-span-1">
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="bg-blue-600 p-2 rounded-lg">
-                    <Building2 className="h-5 w-5 text-white" />
+                    <Building2 className="h-4 md:h-5 w-4 md:w-5 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-base">GovJobs Portal</h4>
+                    <h4 className="font-bold text-sm md:text-base">GovJobs Portal</h4>
                     <p className="text-slate-400 text-xs">Career Gateway</p>
                   </div>
                 </div>
-                <p className="text-slate-400 text-sm leading-relaxed">
+                <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
                   Your trusted source for government job notifications across India.
                 </p>
               </div>
               
               <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
-                <h5 className="font-semibold text-sm mb-4 text-white">Quick Links</h5>
-                <ul className="space-y-2 text-slate-400 text-sm">
+                <h5 className="font-semibold text-sm mb-3 md:mb-4 text-white">Quick Links</h5>
+                <ul className="space-y-2 text-slate-400 text-xs md:text-sm">
                   <li><Link to="/jobs" className="hover:text-white transition-colors duration-200">Latest Jobs</Link></li>
                   <li><Link to="/admit-cards" className="hover:text-white transition-colors duration-200">Admit Cards</Link></li>
                   <li><Link to="/results" className="hover:text-white transition-colors duration-200">Results</Link></li>
@@ -395,8 +429,8 @@ const Index = () => {
               </div>
               
               <div className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-                <h5 className="font-semibold text-sm mb-4 text-white">Categories</h5>
-                <ul className="space-y-2 text-slate-400 text-sm">
+                <h5 className="font-semibold text-sm mb-3 md:mb-4 text-white">Categories</h5>
+                <ul className="space-y-2 text-slate-400 text-xs md:text-sm">
                   <li><Link to="/categories/banking" className="hover:text-white transition-colors duration-200">Banking</Link></li>
                   <li><Link to="/categories/railways" className="hover:text-white transition-colors duration-200">Railways</Link></li>
                   <li><Link to="/categories/ssc" className="hover:text-white transition-colors duration-200">SSC</Link></li>
@@ -405,8 +439,8 @@ const Index = () => {
               </div>
               
               <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-                <h5 className="font-semibold text-sm mb-4 text-white">States</h5>
-                <ul className="space-y-2 text-slate-400 text-sm">
+                <h5 className="font-semibold text-sm mb-3 md:mb-4 text-white">States</h5>
+                <ul className="space-y-2 text-slate-400 text-xs md:text-sm">
                   <li><Link to="/states/delhi" className="hover:text-white transition-colors duration-200">Delhi</Link></li>
                   <li><Link to="/states/maharashtra" className="hover:text-white transition-colors duration-200">Maharashtra</Link></li>
                   <li><Link to="/states/karnataka" className="hover:text-white transition-colors duration-200">Karnataka</Link></li>
@@ -415,9 +449,9 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="border-t border-slate-700 pt-6 flex flex-col md:flex-row justify-between items-center animate-fade-in">
-              <p className="text-slate-400 text-sm">&copy; 2025 GovJobs Portal. All rights reserved.</p>
-              <div className="flex gap-6 mt-3 md:mt-0 text-sm">
+            <div className="border-t border-slate-700 pt-4 md:pt-6 flex flex-col md:flex-row justify-between items-center animate-fade-in gap-3">
+              <p className="text-slate-400 text-xs md:text-sm text-center md:text-left">&copy; 2025 GovJobs Portal. All rights reserved.</p>
+              <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-2 md:mt-0 text-xs md:text-sm">
                 <Link to="/privacy" className="text-slate-400 hover:text-white transition-colors duration-200">Privacy Policy</Link>
                 <Link to="/terms" className="text-slate-400 hover:text-white transition-colors duration-200">Terms of Service</Link>
                 <Link to="/contact" className="text-slate-400 hover:text-white transition-colors duration-200">Contact Us</Link>
