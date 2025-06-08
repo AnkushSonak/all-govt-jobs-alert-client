@@ -73,7 +73,8 @@ const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isDesktopFilterOpen, setIsDesktopFilterOpen] = useState(true);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const filteredJobs = mockJobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -108,60 +109,60 @@ const Index = () => {
         canonical="https://govjobs-portal.com"
       />
       
-      <div className="min-h-screen bg-gray-50 text-sm">
+      <div className="min-h-screen bg-slate-50 text-sm">
         {/* Enhanced Header with Search */}
-        <header className="bg-white shadow-md border-b" role="banner">
-          <div className="container mx-auto px-4 py-4">
+        <header className="bg-white shadow-sm border-b border-slate-200" role="banner">
+          <div className="container mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="bg-blue-600 p-2 rounded-lg">
-                  <Building2 className="h-6 w-6 text-white" />
+                  <Building2 className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">
+                  <h1 className="text-lg font-bold text-slate-900">
                     <Link to="/" aria-label="GovJobs Portal - Home">GovJobs Portal</Link>
                   </h1>
-                  <p className="text-gray-500 text-xs">Your Gateway to Government Careers</p>
+                  <p className="text-slate-500 text-xs">Your Gateway to Government Careers</p>
                 </div>
               </div>
 
               {/* Search in Header */}
-              <div className="flex-1 max-w-2xl mx-8">
+              <div className="flex-1 max-w-xl mx-6">
                 <div className="relative">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" aria-hidden="true" />
+                  <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" aria-hidden="true" />
                   <Input
                     placeholder="Search government jobs..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 h-10 bg-gray-50 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                    className="pl-10 h-9 bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-blue-500 text-sm"
                     aria-label="Search government jobs"
                   />
                 </div>
               </div>
 
-              <nav className="hidden md:flex space-x-6 text-sm" role="navigation" aria-label="Main navigation">
-                <Link to="/" className="text-gray-600 hover:text-blue-600 transition-colors">Home</Link>
-                <Link to="/jobs" className="text-gray-600 hover:text-blue-600 transition-colors">All Jobs</Link>
-                <Link to="/categories" className="text-gray-600 hover:text-blue-600 transition-colors">Categories</Link>
-                <Link to="/states" className="text-gray-600 hover:text-blue-600 transition-colors">States</Link>
-                <Link to="/admit-cards" className="text-gray-600 hover:text-blue-600 transition-colors">Admit Cards</Link>
-                <Link to="/results" className="text-gray-600 hover:text-blue-600 transition-colors">Results</Link>
+              <nav className="hidden md:flex space-x-4 text-sm" role="navigation" aria-label="Main navigation">
+                <Link to="/" className="text-slate-600 hover:text-blue-600 transition-colors px-2 py-1">Home</Link>
+                <Link to="/jobs" className="text-slate-600 hover:text-blue-600 transition-colors px-2 py-1">All Jobs</Link>
+                <Link to="/categories" className="text-slate-600 hover:text-blue-600 transition-colors px-2 py-1">Categories</Link>
+                <Link to="/states" className="text-slate-600 hover:text-blue-600 transition-colors px-2 py-1">States</Link>
+                <Link to="/admit-cards" className="text-slate-600 hover:text-blue-600 transition-colors px-2 py-1">Admit Cards</Link>
+                <Link to="/results" className="text-slate-600 hover:text-blue-600 transition-colors px-2 py-1">Results</Link>
               </nav>
             </div>
           </div>
         </header>
 
         {/* Simplified Hero Section */}
-        <section className="py-12 bg-white" role="main">
+        <section className="py-8 bg-gradient-to-r from-blue-50 to-slate-50" role="main">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">
                 Find Your Dream Government Job
               </h2>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              <p className="text-slate-600 mb-4 max-w-xl mx-auto text-sm">
                 Discover the latest government job opportunities across India with official notifications and application links.
               </p>
-              <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 py-2 rounded-full text-xs font-medium">
+              <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1.5 rounded-full text-xs font-medium border border-green-200">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 2,450+ Active Positions Available
               </div>
@@ -170,21 +171,21 @@ const Index = () => {
         </section>
 
         {/* Featured Categories Section */}
-        <section className="py-8 bg-gray-50">
+        <section className="py-6 bg-white border-b border-slate-100">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Popular Categories</h3>
-              <p className="text-gray-600 text-sm">Browse jobs by category</p>
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-bold text-slate-900 mb-1">Popular Categories</h3>
+              <p className="text-slate-600 text-xs">Browse jobs by category</p>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               {featuredCategories.map((category, index) => (
                 <Link to={`/categories/${category.slug}`} key={index}>
-                  <Card className="cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md border border-gray-200 bg-white">
-                    <CardContent className="p-4 text-center">
-                      <div className="text-2xl mb-2">{category.icon}</div>
-                      <h4 className="font-semibold text-sm mb-1 text-gray-900">{category.name}</h4>
-                      <p className="text-xs text-gray-500">{category.count} Jobs</p>
+                  <Card className="cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-md border border-slate-200 bg-white hover:bg-slate-50">
+                    <CardContent className="p-3 text-center">
+                      <div className="text-xl mb-1">{category.icon}</div>
+                      <h4 className="font-semibold text-xs mb-0.5 text-slate-900">{category.name}</h4>
+                      <p className="text-xs text-slate-500">{category.count} Jobs</p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -194,21 +195,21 @@ const Index = () => {
         </section>
 
         {/* Latest Jobs Section */}
-        <section className="py-8 bg-white" aria-label="Latest government jobs">
+        <section className="py-6 bg-slate-50" aria-label="Latest government jobs">
           <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row gap-6">
               {/* Mobile Filter Trigger */}
               <div className="lg:hidden">
-                <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+                <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
                   <SheetTrigger asChild>
-                    <Button variant="outline" className="w-full mb-4 text-sm">
-                      <Menu className="h-4 w-4 mr-2" />
+                    <Button variant="outline" className="w-full mb-4 text-sm border-slate-200 hover:bg-slate-100">
+                      <Filter className="h-4 w-4 mr-2" />
                       Filter Jobs
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="w-80">
+                  <SheetContent side="left" className="w-80 bg-white">
                     <SheetHeader>
-                      <SheetTitle className="flex items-center gap-2 text-sm">
+                      <SheetTitle className="flex items-center gap-2 text-sm text-slate-900">
                         <Filter className="h-4 w-4" />
                         Filter Jobs
                       </SheetTitle>
@@ -224,24 +225,24 @@ const Index = () => {
               </div>
 
               {/* Desktop Sidebar with Toggle */}
-              <aside className="hidden lg:block lg:w-1/4" aria-label="Job filters">
+              <aside className={`hidden lg:block transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-1/4' : 'lg:w-auto'}`} aria-label="Job filters">
                 <div className="sticky top-6">
-                  <Card className="shadow-sm border-gray-200 bg-white">
+                  <Card className="shadow-sm border-slate-200 bg-white">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-                      <CardTitle className="flex items-center gap-2 text-base text-gray-900">
+                      <CardTitle className={`flex items-center gap-2 text-sm text-slate-900 transition-all duration-300 ${!isDesktopFilterOpen ? 'hidden' : ''}`}>
                         <Filter className="h-4 w-4" />
                         Filter Jobs
                       </CardTitle>
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => setIsFilterOpen(!isFilterOpen)}
-                        className="h-6 w-6 p-0"
+                        onClick={() => setIsDesktopFilterOpen(!isDesktopFilterOpen)}
+                        className="h-8 w-8 p-0 hover:bg-slate-100"
                       >
-                        <Menu className="h-3 w-3" />
+                        <Menu className="h-4 w-4" />
                       </Button>
                     </CardHeader>
-                    {!isFilterOpen && (
+                    {isDesktopFilterOpen && (
                       <CardContent>
                         <FilterSection 
                           selectedCategory={selectedCategory}
@@ -254,26 +255,26 @@ const Index = () => {
               </aside>
 
               {/* Enhanced Jobs Listing */}
-              <main className={`${isFilterOpen ? 'lg:w-full' : 'lg:w-3/4'} transition-all duration-300`}>
-                <div className="flex justify-between items-center mb-6">
+              <main className={`transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-3/4' : 'lg:w-full'}`}>
+                <div className="flex justify-between items-center mb-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900">Latest Government Jobs</h3>
-                    <p className="text-gray-600 mt-1 text-sm">Fresh opportunities updated daily</p>
+                    <h3 className="text-lg font-bold text-slate-900">Latest Government Jobs</h3>
+                    <p className="text-slate-600 mt-0.5 text-xs">Fresh opportunities updated daily</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-100 px-3 py-2 rounded-lg">
+                    <div className="flex items-center gap-2 text-xs text-slate-600 bg-white border border-slate-200 px-3 py-1.5 rounded-lg">
                       <Users className="h-3 w-3" />
                       <span>{filteredJobs.length} jobs found</span>
                     </div>
                     <Link to="/jobs">
-                      <Button variant="outline" size="sm" className="text-xs">
+                      <Button variant="outline" size="sm" className="text-xs border-slate-200 hover:bg-slate-100">
                         View All Jobs
                       </Button>
                     </Link>
                   </div>
                 </div>
 
-                <div className="space-y-4" role="list" aria-label="Job listings">
+                <div className="space-y-3" role="list" aria-label="Job listings">
                   {filteredJobs.map((job) => (
                     <article key={job.id} role="listitem" className="group">
                       <JobCard job={job} />
@@ -283,11 +284,11 @@ const Index = () => {
 
                 {filteredJobs.length === 0 && (
                   <div className="text-center py-12">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Search className="h-8 w-8 text-gray-400" />
+                    <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Search className="h-8 w-8 text-slate-400" />
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">No jobs found</h4>
-                    <p className="text-gray-500 text-sm mb-4">
+                    <h4 className="text-lg font-semibold text-slate-900 mb-2">No jobs found</h4>
+                    <p className="text-slate-500 text-sm mb-4">
                       We couldn't find any jobs matching your criteria. Try adjusting your filters.
                     </p>
                     <Button 
@@ -308,27 +309,27 @@ const Index = () => {
         </section>
 
         {/* Enhanced Footer */}
-        <footer className="bg-gray-900 text-white py-12" role="contentinfo">
+        <footer className="bg-slate-900 text-white py-8" role="contentinfo">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
               <div>
-                <div className="flex items-center space-x-2 mb-4">
+                <div className="flex items-center space-x-2 mb-3">
                   <div className="bg-blue-600 p-2 rounded-lg">
                     <Building2 className="h-4 w-4 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-base">GovJobs Portal</h4>
-                    <p className="text-gray-400 text-xs">Career Gateway</p>
+                    <h4 className="font-bold text-sm">GovJobs Portal</h4>
+                    <p className="text-slate-400 text-xs">Career Gateway</p>
                   </div>
                 </div>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-slate-400 text-xs leading-relaxed">
                   Your trusted source for government job notifications across India.
                 </p>
               </div>
               
               <div>
                 <h5 className="font-semibold text-sm mb-3 text-white">Quick Links</h5>
-                <ul className="space-y-2 text-gray-400 text-sm">
+                <ul className="space-y-1 text-slate-400 text-xs">
                   <li><Link to="/jobs" className="hover:text-white transition-colors">Latest Jobs</Link></li>
                   <li><Link to="/admit-cards" className="hover:text-white transition-colors">Admit Cards</Link></li>
                   <li><Link to="/results" className="hover:text-white transition-colors">Results</Link></li>
@@ -338,7 +339,7 @@ const Index = () => {
               
               <div>
                 <h5 className="font-semibold text-sm mb-3 text-white">Categories</h5>
-                <ul className="space-y-2 text-gray-400 text-sm">
+                <ul className="space-y-1 text-slate-400 text-xs">
                   <li><Link to="/categories/banking" className="hover:text-white transition-colors">Banking</Link></li>
                   <li><Link to="/categories/railways" className="hover:text-white transition-colors">Railways</Link></li>
                   <li><Link to="/categories/ssc" className="hover:text-white transition-colors">SSC</Link></li>
@@ -348,7 +349,7 @@ const Index = () => {
               
               <div>
                 <h5 className="font-semibold text-sm mb-3 text-white">States</h5>
-                <ul className="space-y-2 text-gray-400 text-sm">
+                <ul className="space-y-1 text-slate-400 text-xs">
                   <li><Link to="/states/delhi" className="hover:text-white transition-colors">Delhi</Link></li>
                   <li><Link to="/states/maharashtra" className="hover:text-white transition-colors">Maharashtra</Link></li>
                   <li><Link to="/states/karnataka" className="hover:text-white transition-colors">Karnataka</Link></li>
@@ -357,12 +358,12 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400 text-sm">&copy; 2025 GovJobs Portal. All rights reserved.</p>
-              <div className="flex gap-4 mt-3 md:mt-0 text-sm">
-                <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
-                <Link to="/terms" className="text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact Us</Link>
+            <div className="border-t border-slate-700 pt-4 flex flex-col md:flex-row justify-between items-center">
+              <p className="text-slate-400 text-xs">&copy; 2025 GovJobs Portal. All rights reserved.</p>
+              <div className="flex gap-4 mt-2 md:mt-0 text-xs">
+                <Link to="/privacy" className="text-slate-400 hover:text-white transition-colors">Privacy Policy</Link>
+                <Link to="/terms" className="text-slate-400 hover:text-white transition-colors">Terms of Service</Link>
+                <Link to="/contact" className="text-slate-400 hover:text-white transition-colors">Contact Us</Link>
               </div>
             </div>
           </div>

@@ -40,11 +40,11 @@ export const FilterSection = ({ selectedCategory, setSelectedCategory }: FilterS
     <div className="space-y-4">
       {/* Categories Filter */}
       <div>
-        <h4 className="font-semibold text-sm text-gray-900 mb-3">Categories</h4>
+        <h4 className="font-semibold text-sm text-slate-900 mb-3">Categories</h4>
         <div className="space-y-1">
           <Button
             variant={selectedCategory === "" ? "default" : "ghost"}
-            className="w-full justify-start text-xs h-8 font-normal"
+            className="w-full justify-start text-xs h-8 font-normal hover:bg-slate-100"
             onClick={() => setSelectedCategory("")}
           >
             All Categories
@@ -53,12 +53,12 @@ export const FilterSection = ({ selectedCategory, setSelectedCategory }: FilterS
             <div key={category.name} className="flex items-center justify-between">
               <Button
                 variant={selectedCategory === category.name ? "default" : "ghost"}
-                className="flex-1 justify-start text-xs h-8 font-normal"
+                className="flex-1 justify-start text-xs h-8 font-normal hover:bg-slate-100"
                 onClick={() => setSelectedCategory(category.name)}
               >
                 {category.name}
               </Button>
-              <Badge variant="secondary" className="ml-2 text-xs bg-gray-100 text-gray-600">
+              <Badge variant="secondary" className="ml-2 text-xs bg-slate-100 text-slate-600 border-slate-200">
                 {category.count}
               </Badge>
             </div>
@@ -67,18 +67,18 @@ export const FilterSection = ({ selectedCategory, setSelectedCategory }: FilterS
       </div>
 
       {/* Quick Filters */}
-      <div className="border-t border-gray-200 pt-4">
-        <h4 className="font-semibold text-sm text-gray-900 mb-3">Quick Filters</h4>
+      <div className="border-t border-slate-200 pt-4">
+        <h4 className="font-semibold text-sm text-slate-900 mb-3">Quick Filters</h4>
         <div className="space-y-1">
           {quickFilters.map((filter) => (
             <Button 
               key={filter.name}
               variant="outline" 
-              className="w-full justify-start text-xs h-8 border-gray-200 hover:bg-gray-50"
+              className="w-full justify-start text-xs h-8 border-slate-200 hover:bg-slate-50"
             >
               <span className="mr-2">{filter.icon}</span>
               {filter.name}
-              <Badge variant="secondary" className="ml-auto text-xs bg-gray-100 text-gray-600">
+              <Badge variant="secondary" className="ml-auto text-xs bg-slate-100 text-slate-600 border-slate-200">
                 {filter.count}
               </Badge>
             </Button>
@@ -87,18 +87,18 @@ export const FilterSection = ({ selectedCategory, setSelectedCategory }: FilterS
       </div>
 
       {/* Popular States */}
-      <div className="border-t border-gray-200 pt-4">
-        <h4 className="font-semibold text-sm text-gray-900 mb-3">Popular States</h4>
+      <div className="border-t border-slate-200 pt-4">
+        <h4 className="font-semibold text-sm text-slate-900 mb-3">Popular States</h4>
         <div className="space-y-1">
           {states.map((state) => (
             <div key={state.name} className="flex items-center justify-between">
               <Button 
                 variant="ghost" 
-                className="flex-1 justify-start text-xs h-8 font-normal hover:bg-gray-50"
+                className="flex-1 justify-start text-xs h-8 font-normal hover:bg-slate-50"
               >
                 {state.name}
               </Button>
-              <Badge variant="outline" className="ml-2 text-xs border-gray-200 text-gray-600">
+              <Badge variant="outline" className="ml-2 text-xs border-slate-200 text-slate-600">
                 {state.count}
               </Badge>
             </div>
