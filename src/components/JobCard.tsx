@@ -28,61 +28,61 @@ export const JobCard = ({ job }: JobCardProps) => {
   const isUrgent = daysLeft <= 7;
 
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-300 border-l-4 border-l-blue-500">
-      <CardHeader className="pb-3">
+    <Card className="hover:shadow-md transition-shadow duration-300 border border-gray-200 bg-white">
+      <CardHeader className="pb-2">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-1">
               <Link 
                 to={`/jobs/${job.slug}-${job.id}`} 
-                className="text-lg font-semibold text-primary hover:text-primary/80 transition-colors"
+                className="text-base font-semibold text-gray-900 hover:text-blue-600 transition-colors"
               >
                 {job.title}
               </Link>
               {job.isNew && (
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
+                <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
                   New
                 </Badge>
               )}
               {isUrgent && (
-                <Badge variant="destructive" className="animate-pulse">
+                <Badge variant="destructive" className="animate-pulse text-xs">
                   Urgent
                 </Badge>
               )}
             </div>
-            <p className="text-muted-foreground font-medium">{job.department}</p>
+            <p className="text-gray-600 font-medium text-sm">{job.department}</p>
           </div>
-          <Badge variant="outline" className="shrink-0">
+          <Badge variant="outline" className="shrink-0 text-xs">
             {job.category}
           </Badge>
         </div>
       </CardHeader>
 
       <CardContent className="pt-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-          <div className="flex items-center gap-2 text-sm">
-            <MapPin className="h-4 w-4 text-muted-foreground" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
+          <div className="flex items-center gap-2 text-xs text-gray-600">
+            <MapPin className="h-3 w-3 text-gray-400" />
             <span>{job.location}</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Users className="h-4 w-4 text-muted-foreground" />
+          <div className="flex items-center gap-2 text-xs text-gray-600">
+            <Users className="h-3 w-3 text-gray-400" />
             <span>{job.totalPosts} Posts</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
-            <span>Qualification: {job.qualification}</span>
+          <div className="flex items-center gap-2 text-xs text-gray-600">
+            <Calendar className="h-3 w-3 text-gray-400" />
+            <span>{job.qualification}</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Clock className="h-4 w-4 text-muted-foreground" />
-            <span className={isUrgent ? "text-red-600 font-medium" : ""}>
+          <div className="flex items-center gap-2 text-xs">
+            <Clock className="h-3 w-3 text-gray-400" />
+            <span className={isUrgent ? "text-red-600 font-medium" : "text-gray-600"}>
               {daysLeft > 0 ? `${daysLeft} days left` : "Deadline passed"}
             </span>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Link to={`/jobs/${job.slug}-${job.id}`} className="flex-1">
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full text-xs h-8 border-gray-200 hover:bg-gray-50">
               View Details
             </Button>
           </Link>
@@ -92,8 +92,8 @@ export const JobCard = ({ job }: JobCardProps) => {
             rel="noopener noreferrer"
             className="flex-1"
           >
-            <Button className="w-full">
-              <ExternalLink className="h-4 w-4 mr-2" />
+            <Button className="w-full text-xs h-8 bg-blue-600 hover:bg-blue-700">
+              <ExternalLink className="h-3 w-3 mr-1" />
               Apply Now
             </Button>
           </a>

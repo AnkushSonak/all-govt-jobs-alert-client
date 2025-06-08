@@ -6,6 +6,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import Index from "./pages/Index";
+import AllJobs from "./pages/AllJobs";
+import Categories from "./pages/Categories";
+import States from "./pages/States";
+import AdmitCards from "./pages/AdmitCards";
+import Results from "./pages/Results";
 import JobDetail from "./pages/JobDetail";
 import NotFound from "./pages/NotFound";
 
@@ -20,7 +25,14 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/jobs" element={<AllJobs />} />
             <Route path="/jobs/:jobSlug" element={<JobDetail />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/categories/:categorySlug" element={<Categories />} />
+            <Route path="/states" element={<States />} />
+            <Route path="/states/:stateSlug" element={<States />} />
+            <Route path="/admit-cards" element={<AdmitCards />} />
+            <Route path="/results" element={<Results />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

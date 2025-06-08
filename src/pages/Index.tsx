@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Search, MapPin, Calendar, Building2, Users, TrendingUp, Filter, Star, Clock, ChevronRight, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { JobCard } from "@/components/JobCard";
 import { FilterSection } from "@/components/FilterSection";
-import { StatsSection } from "@/components/StatsSection";
 import { SEO } from "@/components/SEO";
 import { generateWebsiteStructuredData } from "@/utils/structuredData";
 import { Link } from "react-router-dom";
@@ -89,12 +89,12 @@ const Index = () => {
 
   // Featured categories for quick access
   const featuredCategories = [
-    { name: "Banking", count: "150+", icon: "🏦", color: "bg-blue-50 border-blue-200 text-blue-700" },
-    { name: "Railways", count: "200+", icon: "🚆", color: "bg-green-50 border-green-200 text-green-700" },
-    { name: "SSC", count: "180+", icon: "📚", color: "bg-purple-50 border-purple-200 text-purple-700" },
-    { name: "UPSC", count: "45+", icon: "🏛️", color: "bg-orange-50 border-orange-200 text-orange-700" },
-    { name: "Healthcare", count: "120+", icon: "🏥", color: "bg-red-50 border-red-200 text-red-700" },
-    { name: "Defense", count: "90+", icon: "⚔️", color: "bg-gray-50 border-gray-200 text-gray-700" }
+    { name: "Banking", count: "150+", icon: "🏦", slug: "banking" },
+    { name: "Railways", count: "200+", icon: "🚆", slug: "railways" },
+    { name: "SSC", count: "180+", icon: "📚", slug: "ssc" },
+    { name: "UPSC", count: "45+", icon: "🏛️", slug: "upsc" },
+    { name: "Healthcare", count: "120+", icon: "🏥", slug: "healthcare" },
+    { name: "Defense", count: "90+", icon: "⚔️", slug: "defense" }
   ];
 
   return (
@@ -108,183 +108,112 @@ const Index = () => {
         canonical="https://govjobs-portal.com"
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        {/* Enhanced Header */}
-        <header className="bg-gradient-to-r from-primary to-blue-700 text-primary-foreground shadow-lg" role="banner">
-          <div className="container mx-auto px-4 py-6">
+      <div className="min-h-screen bg-gray-50 text-sm">
+        {/* Enhanced Header with Search */}
+        <header className="bg-white shadow-md border-b" role="banner">
+          <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="bg-white/10 p-2 rounded-lg">
-                  <Building2 className="h-8 w-8" />
+              <div className="flex items-center space-x-3">
+                <div className="bg-blue-600 p-2 rounded-lg">
+                  <Building2 className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold">
+                  <h1 className="text-xl font-bold text-gray-900">
                     <Link to="/" aria-label="GovJobs Portal - Home">GovJobs Portal</Link>
                   </h1>
-                  <p className="text-blue-100 text-sm">Your Gateway to Government Careers</p>
+                  <p className="text-gray-500 text-xs">Your Gateway to Government Careers</p>
                 </div>
               </div>
-              <nav className="hidden md:flex space-x-8" role="navigation" aria-label="Main navigation">
-                <Link to="/" className="hover:text-blue-200 transition-colors flex items-center gap-2">
-                  <span>Home</span>
-                </Link>
-                <Link to="/jobs" className="hover:text-blue-200 transition-colors">All Jobs</Link>
-                <Link to="/categories" className="hover:text-blue-200 transition-colors">Categories</Link>
-                <Link to="/states" className="hover:text-blue-200 transition-colors">By State</Link>
+
+              {/* Search in Header */}
+              <div className="flex-1 max-w-2xl mx-8">
+                <div className="relative">
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" aria-hidden="true" />
+                  <Input
+                    placeholder="Search government jobs..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 h-10 bg-gray-50 border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                    aria-label="Search government jobs"
+                  />
+                </div>
+              </div>
+
+              <nav className="hidden md:flex space-x-6 text-sm" role="navigation" aria-label="Main navigation">
+                <Link to="/" className="text-gray-600 hover:text-blue-600 transition-colors">Home</Link>
+                <Link to="/jobs" className="text-gray-600 hover:text-blue-600 transition-colors">All Jobs</Link>
+                <Link to="/categories" className="text-gray-600 hover:text-blue-600 transition-colors">Categories</Link>
+                <Link to="/states" className="text-gray-600 hover:text-blue-600 transition-colors">States</Link>
+                <Link to="/admit-cards" className="text-gray-600 hover:text-blue-600 transition-colors">Admit Cards</Link>
+                <Link to="/results" className="text-gray-600 hover:text-blue-600 transition-colors">Results</Link>
               </nav>
             </div>
           </div>
         </header>
 
-        {/* Enhanced Hero Section */}
-        <section className="py-16 relative overflow-hidden" role="main">
-          {/* Background decoration */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/20 rounded-full -translate-y-48 translate-x-48"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-200/20 rounded-full translate-y-48 -translate-x-48"></div>
-          
-          <div className="container mx-auto px-4 relative">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                Live Job Updates • 2,450+ Active Positions
-              </div>
-              
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                Find Your Dream
-                <span className="gradient-text block">Government Job</span>
+        {/* Simplified Hero Section */}
+        <section className="py-12 bg-white" role="main">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Find Your Dream Government Job
               </h2>
-              
-              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-                Discover the latest government job opportunities across India with official notifications, 
-                application links, and expert guidance. Your career in public service starts here.
+              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Discover the latest government job opportunities across India with official notifications and application links.
               </p>
-
-              {/* Quick Stats */}
-              <div className="flex justify-center gap-8 mb-12">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">2.4K+</div>
-                  <div className="text-sm text-gray-600">Active Jobs</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600">50K+</div>
-                  <div className="text-sm text-gray-600">Openings</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600">200+</div>
-                  <div className="text-sm text-gray-600">Departments</div>
-                </div>
+              <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 py-2 rounded-full text-xs font-medium">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                2,450+ Active Positions Available
               </div>
             </div>
-
-            {/* Enhanced Search Section */}
-            <section aria-label="Job search">
-              <Card className="max-w-5xl mx-auto shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-8">
-                  <form role="search" onSubmit={(e) => e.preventDefault()}>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                      <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Search Jobs
-                        </label>
-                        <div className="relative">
-                          <Search className="absolute left-4 top-4 h-5 w-5 text-gray-400" aria-hidden="true" />
-                          <Input
-                            placeholder="Search by job title, department, or keyword..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-12 h-12 text-lg border-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                            aria-label="Search government jobs"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Location
-                        </label>
-                        <Select value={selectedState} onValueChange={setSelectedState}>
-                          <SelectTrigger className="h-12 border-gray-200" aria-label="Select state">
-                            <SelectValue placeholder="Select State" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="all">All States</SelectItem>
-                            <SelectItem value="Delhi">Delhi</SelectItem>
-                            <SelectItem value="Maharashtra">Maharashtra</SelectItem>
-                            <SelectItem value="Karnataka">Karnataka</SelectItem>
-                            <SelectItem value="Tamil Nadu">Tamil Nadu</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Search
-                        </label>
-                        <Button type="submit" className="w-full h-12 text-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800">
-                          <Search className="h-5 w-5 mr-2" aria-hidden="true" />
-                          Find Jobs
-                        </Button>
-                      </div>
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
-            </section>
           </div>
         </section>
 
         {/* Featured Categories Section */}
-        <section className="py-12 bg-white/50">
+        <section className="py-8 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-10">
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">Popular Categories</h3>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Browse jobs by category and find opportunities that match your expertise
-              </p>
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Popular Categories</h3>
+              <p className="text-gray-600 text-sm">Browse jobs by category</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
               {featuredCategories.map((category, index) => (
-                <Card key={index} className={`cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg border-2 ${category.color}`}>
-                  <CardContent className="p-6 text-center">
-                    <div className="text-3xl mb-3">{category.icon}</div>
-                    <h4 className="font-semibold text-lg mb-2">{category.name}</h4>
-                    <p className="text-sm font-medium">{category.count} Jobs</p>
-                    <div className="flex justify-center mt-3">
-                      <ChevronRight className="h-4 w-4" />
-                    </div>
-                  </CardContent>
-                </Card>
+                <Link to={`/categories/${category.slug}`} key={index}>
+                  <Card className="cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-md border border-gray-200 bg-white">
+                    <CardContent className="p-4 text-center">
+                      <div className="text-2xl mb-2">{category.icon}</div>
+                      <h4 className="font-semibold text-sm mb-1 text-gray-900">{category.name}</h4>
+                      <p className="text-xs text-gray-500">{category.count} Jobs</p>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Stats Section */}
-        <StatsSection />
-
         {/* Latest Jobs Section */}
-        <section className="py-16 bg-white" aria-label="Latest government jobs">
+        <section className="py-8 bg-white" aria-label="Latest government jobs">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col lg:flex-row gap-8">
+            <div className="flex flex-col lg:flex-row gap-6">
               {/* Mobile Filter Trigger */}
               <div className="lg:hidden">
                 <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
                   <SheetTrigger asChild>
-                    <Button variant="outline" className="w-full mb-6">
+                    <Button variant="outline" className="w-full mb-4 text-sm">
                       <Menu className="h-4 w-4 mr-2" />
                       Filter Jobs
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-80">
                     <SheetHeader>
-                      <SheetTitle className="flex items-center gap-2">
-                        <Filter className="h-5 w-5" />
+                      <SheetTitle className="flex items-center gap-2 text-sm">
+                        <Filter className="h-4 w-4" />
                         Filter Jobs
                       </SheetTitle>
                     </SheetHeader>
-                    <div className="mt-6">
+                    <div className="mt-4">
                       <FilterSection 
                         selectedCategory={selectedCategory}
                         setSelectedCategory={setSelectedCategory}
@@ -297,19 +226,19 @@ const Index = () => {
               {/* Desktop Sidebar with Toggle */}
               <aside className="hidden lg:block lg:w-1/4" aria-label="Job filters">
                 <div className="sticky top-6">
-                  <Card className="shadow-lg">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                      <CardTitle className="flex items-center gap-2">
-                        <Filter className="h-5 w-5" />
+                  <Card className="shadow-sm border-gray-200 bg-white">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+                      <CardTitle className="flex items-center gap-2 text-base text-gray-900">
+                        <Filter className="h-4 w-4" />
                         Filter Jobs
                       </CardTitle>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => setIsFilterOpen(!isFilterOpen)}
-                        className="h-8 w-8 p-0"
+                        className="h-6 w-6 p-0"
                       >
-                        <Menu className="h-4 w-4" />
+                        <Menu className="h-3 w-3" />
                       </Button>
                     </CardHeader>
                     {!isFilterOpen && (
@@ -326,24 +255,25 @@ const Index = () => {
 
               {/* Enhanced Jobs Listing */}
               <main className={`${isFilterOpen ? 'lg:w-full' : 'lg:w-3/4'} transition-all duration-300`}>
-                <div className="flex justify-between items-center mb-8">
+                <div className="flex justify-between items-center mb-6">
                   <div>
-                    <h3 className="text-3xl font-bold text-gray-900">Latest Government Jobs</h3>
-                    <p className="text-gray-600 mt-2">Fresh opportunities updated daily</p>
+                    <h3 className="text-2xl font-bold text-gray-900">Latest Government Jobs</h3>
+                    <p className="text-gray-600 mt-1 text-sm">Fresh opportunities updated daily</p>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-100 px-3 py-2 rounded-lg">
-                      <Users className="h-4 w-4" />
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-100 px-3 py-2 rounded-lg">
+                      <Users className="h-3 w-3" />
                       <span>{filteredJobs.length} jobs found</span>
                     </div>
-                    <Button variant="outline" size="sm">
-                      <Star className="h-4 w-4 mr-2" />
-                      Save Search
-                    </Button>
+                    <Link to="/jobs">
+                      <Button variant="outline" size="sm" className="text-xs">
+                        View All Jobs
+                      </Button>
+                    </Link>
                   </div>
                 </div>
 
-                <div className="space-y-6" role="list" aria-label="Job listings">
+                <div className="space-y-4" role="list" aria-label="Job listings">
                   {filteredJobs.map((job) => (
                     <article key={job.id} role="listitem" className="group">
                       <JobCard job={job} />
@@ -352,16 +282,16 @@ const Index = () => {
                 </div>
 
                 {filteredJobs.length === 0 && (
-                  <div className="text-center py-16">
-                    <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Search className="h-12 w-12 text-gray-400" />
+                  <div className="text-center py-12">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Search className="h-8 w-8 text-gray-400" />
                     </div>
-                    <h4 className="text-2xl font-semibold text-gray-900 mb-2">No jobs found</h4>
-                    <p className="text-gray-500 text-lg mb-6">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">No jobs found</h4>
+                    <p className="text-gray-500 text-sm mb-4">
                       We couldn't find any jobs matching your criteria. Try adjusting your filters.
                     </p>
                     <Button 
-                      className="bg-gradient-to-r from-blue-600 to-blue-700"
+                      className="bg-blue-600 hover:bg-blue-700 text-sm"
                       onClick={() => {
                         setSearchTerm("");
                         setSelectedState("");
@@ -378,64 +308,58 @@ const Index = () => {
         </section>
 
         {/* Enhanced Footer */}
-        <footer className="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-16" role="contentinfo">
+        <footer className="bg-gray-900 text-white py-12" role="contentinfo">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
               <div>
-                <div className="flex items-center space-x-3 mb-6">
+                <div className="flex items-center space-x-2 mb-4">
                   <div className="bg-blue-600 p-2 rounded-lg">
-                    <Building2 className="h-6 w-6 text-white" />
+                    <Building2 className="h-4 w-4 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xl">GovJobs Portal</h4>
-                    <p className="text-gray-400 text-sm">Career Gateway</p>
+                    <h4 className="font-bold text-base">GovJobs Portal</h4>
+                    <p className="text-gray-400 text-xs">Career Gateway</p>
                   </div>
                 </div>
-                <p className="text-gray-400 leading-relaxed">
-                  Your trusted source for government job notifications across India. 
-                  We help you find the perfect opportunity in public service.
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Your trusted source for government job notifications across India.
                 </p>
               </div>
               
               <div>
-                <h5 className="font-semibold text-lg mb-4 text-white">Quick Links</h5>
-                <ul className="space-y-3 text-gray-400">
-                  <li><Link to="/latest" className="hover:text-white transition-colors">Latest Jobs</Link></li>
+                <h5 className="font-semibold text-sm mb-3 text-white">Quick Links</h5>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li><Link to="/jobs" className="hover:text-white transition-colors">Latest Jobs</Link></li>
                   <li><Link to="/admit-cards" className="hover:text-white transition-colors">Admit Cards</Link></li>
                   <li><Link to="/results" className="hover:text-white transition-colors">Results</Link></li>
-                  <li><Link to="/syllabus" className="hover:text-white transition-colors">Syllabus</Link></li>
+                  <li><Link to="/categories" className="hover:text-white transition-colors">Categories</Link></li>
                 </ul>
               </div>
               
               <div>
-                <h5 className="font-semibold text-lg mb-4 text-white">Categories</h5>
-                <ul className="space-y-3 text-gray-400">
-                  <li><Link to="/banking" className="hover:text-white transition-colors">Banking</Link></li>
-                  <li><Link to="/railways" className="hover:text-white transition-colors">Railways</Link></li>
-                  <li><Link to="/ssc" className="hover:text-white transition-colors">SSC</Link></li>
-                  <li><Link to="/upsc" className="hover:text-white transition-colors">UPSC</Link></li>
+                <h5 className="font-semibold text-sm mb-3 text-white">Categories</h5>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li><Link to="/categories/banking" className="hover:text-white transition-colors">Banking</Link></li>
+                  <li><Link to="/categories/railways" className="hover:text-white transition-colors">Railways</Link></li>
+                  <li><Link to="/categories/ssc" className="hover:text-white transition-colors">SSC</Link></li>
+                  <li><Link to="/categories/upsc" className="hover:text-white transition-colors">UPSC</Link></li>
                 </ul>
               </div>
               
               <div>
-                <h5 className="font-semibold text-lg mb-4 text-white">Contact Info</h5>
-                <ul className="space-y-3 text-gray-400">
-                  <li className="flex items-center gap-2">
-                    <span>📧</span> info@govjobs.com
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span>📞</span> +91 98765 43210
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span>📍</span> New Delhi, India
-                  </li>
+                <h5 className="font-semibold text-sm mb-3 text-white">States</h5>
+                <ul className="space-y-2 text-gray-400 text-sm">
+                  <li><Link to="/states/delhi" className="hover:text-white transition-colors">Delhi</Link></li>
+                  <li><Link to="/states/maharashtra" className="hover:text-white transition-colors">Maharashtra</Link></li>
+                  <li><Link to="/states/karnataka" className="hover:text-white transition-colors">Karnataka</Link></li>
+                  <li><Link to="/states" className="hover:text-white transition-colors">All States</Link></li>
                 </ul>
               </div>
             </div>
             
-            <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400">&copy; 2025 GovJobs Portal. All rights reserved.</p>
-              <div className="flex gap-6 mt-4 md:mt-0">
+            <div className="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
+              <p className="text-gray-400 text-sm">&copy; 2025 GovJobs Portal. All rights reserved.</p>
+              <div className="flex gap-4 mt-3 md:mt-0 text-sm">
                 <Link to="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
                 <Link to="/terms" className="text-gray-400 hover:text-white transition-colors">Terms of Service</Link>
                 <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact Us</Link>
