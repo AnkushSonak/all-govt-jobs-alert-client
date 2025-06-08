@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index";
 import AllJobs from "./pages/AllJobs";
 import Categories from "./pages/Categories";
@@ -19,25 +20,27 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/jobs" element={<AllJobs />} />
-            <Route path="/jobs/:jobSlug" element={<JobDetail />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/categories/:categorySlug" element={<Categories />} />
-            <Route path="/states" element={<States />} />
-            <Route path="/states/:stateSlug" element={<States />} />
-            <Route path="/admit-cards" element={<AdmitCards />} />
-            <Route path="/results" element={<Results />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <ThemeProvider defaultTheme="system" storageKey="govjobs-ui-theme">
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/jobs" element={<AllJobs />} />
+              <Route path="/jobs/:jobSlug" element={<JobDetail />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/categories/:categorySlug" element={<Categories />} />
+              <Route path="/states" element={<States />} />
+              <Route path="/states/:stateSlug" element={<States />} />
+              <Route path="/admit-cards" element={<AdmitCards />} />
+              <Route path="/results" element={<Results />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
     </HelmetProvider>
   </QueryClientProvider>
 );
