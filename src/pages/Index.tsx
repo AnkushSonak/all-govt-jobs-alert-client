@@ -1,51 +1,155 @@
 
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { MapPin, Calendar, Building2, Users, Filter, Menu, Bell, Star, TrendingUp, Briefcase } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, Calendar, Users, Briefcase, TrendingUp, Bell, Star } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { JobCard } from "@/components/JobCard";
+import { FilterSection } from "@/components/FilterSection";
+import { SearchBar } from "@/components/SearchBar";
 import { SEO } from "@/components/SEO";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { generateWebsiteStructuredData } from "@/utils/structuredData";
+import { Link } from "react-router-dom";
 
-const featuredJobs = [
+// Mock data - in real implementation, this would come from your PostgreSQL database
+const mockJobs = [
   {
     id: 1,
-    title: "Senior Software Engineer",
-    department: "Department of Electronics & IT",
-    location: "New Delhi",
-    qualification: "B.Tech/M.Tech in Computer Science",
+    title: "Assistant Manager - State Bank of India",
+    department: "Banking",
+    location: "Mumbai, Maharashtra",
+    qualification: "Graduate",
     applyDeadline: "2025-01-15",
-    totalPosts: 50,
-    sourceUrl: "https://example.com",
-    category: "Engineering",
-    slug: "senior-software-engineer"
+    totalPosts: 250,
+    sourceUrl: "https://sbi.co.in/careers",
+    category: "Banking",
+    isNew: true,
+    slug: "assistant-manager-sbi-mumbai"
   },
   {
     id: 2,
-    title: "Banking Associate",
-    department: "State Bank of India",
-    location: "Mumbai",
-    qualification: "Graduate with Banking Experience",
+    title: "Junior Engineer - Indian Railways",
+    department: "Railways",
+    location: "Delhi, NCR",
+    qualification: "Diploma/B.Tech",
     applyDeadline: "2025-01-20",
-    totalPosts: 100,
-    sourceUrl: "https://example.com",
-    category: "Banking",
-    slug: "banking-associate"
+    totalPosts: 500,
+    sourceUrl: "https://indianrailways.gov.in",
+    category: "Engineering",
+    isNew: true,
+    slug: "junior-engineer-indian-railways-delhi"
   },
   {
     id: 3,
-    title: "Railway Technician",
-    department: "Indian Railways",
-    location: "Chennai",
-    qualification: "ITI/Diploma in relevant field",
+    title: "Staff Nurse - All India Institute of Medical Sciences",
+    department: "Healthcare",
+    location: "New Delhi",
+    qualification: "B.Sc Nursing",
     applyDeadline: "2025-01-25",
+    totalPosts: 100,
+    sourceUrl: "https://aiims.edu",
+    category: "Healthcare",
+    isNew: false,
+    slug: "staff-nurse-aiims-delhi"
+  },
+  {
+    id: 4,
+    title: "Assistant Professor - University Grants Commission",
+    department: "Education",
+    location: "Various States",
+    qualification: "Ph.D",
+    applyDeadline: "2025-02-01",
     totalPosts: 75,
-    sourceUrl: "https://example.com",
-    category: "Railways",
-    slug: "railway-technician"
+    sourceUrl: "https://ugc.ac.in",
+    category: "Education",
+    isNew: false,
+    slug: "assistant-professor-ugc-various"
+  },
+  {
+    id: 5,
+    title: "Tax Assistant - Income Tax Department",
+    department: "Finance",
+    location: "Chennai, Tamil Nadu",
+    qualification: "Graduate",
+    applyDeadline: "2025-01-30",
+    totalPosts: 200,
+    sourceUrl: "https://incometax.gov.in",
+    category: "Finance",
+    isNew: true,
+    slug: "tax-assistant-income-tax-chennai"
+  },
+  {
+    id: 6,
+    title: "Forest Guard - Ministry of Environment",
+    department: "Environment",
+    location: "Bangalore, Karnataka",
+    qualification: "12th Pass",
+    applyDeadline: "2025-02-05",
+    totalPosts: 150,
+    sourceUrl: "https://moef.gov.in",
+    category: "Environment",
+    isNew: false,
+    slug: "forest-guard-environment-bangalore"
+  },
+  {
+    id: 7,
+    title: "Sub Inspector - Central Reserve Police Force",
+    department: "Defense",
+    location: "Hyderabad, Telangana",
+    qualification: "Graduate",
+    applyDeadline: "2025-02-10",
+    totalPosts: 300,
+    sourceUrl: "https://crpf.gov.in",
+    category: "Defense",
+    isNew: true,
+    slug: "sub-inspector-crpf-hyderabad"
+  },
+  {
+    id: 8,
+    title: "Clerk - Postal Department",
+    department: "Communications",
+    location: "Kolkata, West Bengal",
+    qualification: "12th Pass",
+    applyDeadline: "2025-02-15",
+    totalPosts: 180,
+    sourceUrl: "https://indiapost.gov.in",
+    category: "Communications",
+    isNew: false,
+    slug: "clerk-postal-department-kolkata"
+  },
+  {
+    id: 9,
+    title: "Scientist - Indian Space Research Organisation",
+    department: "Research",
+    location: "Ahmedabad, Gujarat",
+    qualification: "M.Tech/Ph.D",
+    applyDeadline: "2025-02-20",
+    totalPosts: 50,
+    sourceUrl: "https://isro.gov.in",
+    category: "Research",
+    isNew: true,
+    slug: "scientist-isro-ahmedabad"
+  },
+  {
+    id: 10,
+    title: "Junior Translator - Ministry of External Affairs",
+    department: "Foreign Affairs",
+    location: "New Delhi",
+    qualification: "Graduate with Language Skills",
+    applyDeadline: "2025-02-25",
+    totalPosts: 25,
+    sourceUrl: "https://mea.gov.in",
+    category: "Languages",
+    isNew: false,
+    slug: "junior-translator-mea-delhi"
   }
 ];
+
+const featuredJobs = mockJobs.slice(0, 3);
 
 const categories = [
   { name: "Banking", count: 150, icon: "🏦" },
@@ -64,46 +168,58 @@ const stats = [
 ];
 
 const Index = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleSearch = () => {
+    // Redirect to jobs page with search parameters
+    if (searchTerm) {
+      window.location.href = `/jobs?search=${encodeURIComponent(searchTerm)}`;
+    }
+  };
+
+  const pageTitle = "Latest Government Jobs 2025 - Banking, Railways, SSC, UPSC | GovJobs Portal";
+  const pageDescription = "Find latest government job notifications across India. 500+ current openings in Banking, Railways, SSC, UPSC, and State Government jobs with official application links.";
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4 animate-fade-in">
+          <div className="w-16 h-16 bg-primary rounded-lg mx-auto animate-pulse"></div>
+          <h2 className="text-xl font-semibold text-foreground">Loading GovJobs Portal...</h2>
+          <div className="w-48 h-2 bg-muted rounded-full mx-auto overflow-hidden">
+            <div className="w-full h-full bg-primary rounded-full animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <SEO 
-        title="GovJobs Portal - Latest Government Jobs in India 2025"
-        description="Find latest government job notifications for Banking, Railways, SSC, UPSC, State Government jobs. Apply for Sarkari Naukri with complete details."
+        title={pageTitle}
+        description={pageDescription}
         url="https://govjobs-portal.com"
+        type="website"
+        structuredData={generateWebsiteStructuredData()}
         canonical="https://govjobs-portal.com"
       />
       
       <div className="min-h-screen bg-background text-sm">
-        {/* Header */}
-        <header className="bg-background shadow-md border-b">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center space-x-3">
-                <div className="bg-primary p-2 rounded-lg">
-                  <svg className="h-6 w-6 text-primary-foreground" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-foreground">GovJobs Portal</h1>
-                  <p className="text-muted-foreground text-xs">Your Gateway to Government Careers</p>
-                </div>
-              </Link>
-
-              <div className="flex items-center gap-4">
-                <nav className="hidden md:flex space-x-6 text-sm">
-                  <Link to="/" className="text-primary font-medium">Home</Link>
-                  <Link to="/jobs" className="text-muted-foreground hover:text-primary">All Jobs</Link>
-                  <Link to="/categories" className="text-muted-foreground hover:text-primary">Categories</Link>
-                  <Link to="/states" className="text-muted-foreground hover:text-primary">States</Link>
-                  <Link to="/admit-cards" className="text-muted-foreground hover:text-primary">Admit Cards</Link>
-                  <Link to="/results" className="text-muted-foreground hover:text-primary">Results</Link>
-                </nav>
-                <ThemeToggle />
-              </div>
-            </div>
-          </div>
-        </header>
+        <Header 
+          showSearch={true}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onSearch={handleSearch}
+        />
 
         {/* Hero Section */}
         <section className="py-12 bg-gradient-to-br from-primary/10 to-secondary/10">
@@ -116,22 +232,6 @@ const Index = () => {
               we bring you the latest notifications and updates.
             </p>
             
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input 
-                    placeholder="Search jobs by title, department, or location..." 
-                    className="pl-10 h-12"
-                  />
-                </div>
-                <Button className="h-12 px-6">
-                  Search Jobs
-                </Button>
-              </div>
-            </div>
-
             {/* Quick Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
               {stats.map((stat, index) => (
@@ -201,8 +301,62 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Job Categories */}
+        {/* All Jobs Section */}
         <section className="py-12 bg-muted/50">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h3 className="text-2xl font-bold text-foreground mb-2">All Government Jobs</h3>
+                <p className="text-muted-foreground">Complete list of latest job opportunities</p>
+              </div>
+              <Link to="/jobs">
+                <Button>
+                  View All {mockJobs.length}+ Jobs
+                </Button>
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {mockJobs.slice(0, 10).map((job) => (
+                <Card key={job.id} className="hover:shadow-md transition-all duration-300 border">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-foreground mb-1 text-sm">{job.title}</h4>
+                        <p className="text-muted-foreground text-xs">{job.department}</p>
+                      </div>
+                      {job.isNew && (
+                        <Badge variant="destructive" className="text-xs">
+                          New
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <div className="flex items-center">
+                        <MapPin className="h-3 w-3 mr-1" />
+                        <span>{job.location}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        <span>{new Date(job.applyDeadline).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <Link to={`/jobs/${job.slug}-${job.id}`}>
+                        <Button variant="outline" size="sm" className="w-full text-xs">
+                          View Details
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Job Categories */}
+        <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-foreground mb-2">Browse by Category</h3>
@@ -221,6 +375,35 @@ const Index = () => {
                   </Card>
                 </Link>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Information Section */}
+        <section className="py-12 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="text-center">
+                <CardContent className="p-6">
+                  <Star className="h-12 w-12 text-primary mx-auto mb-4" />
+                  <h4 className="font-semibold text-foreground mb-2">Verified Jobs</h4>
+                  <p className="text-muted-foreground text-sm">All job postings are verified from official government sources</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="p-6">
+                  <Bell className="h-12 w-12 text-primary mx-auto mb-4" />
+                  <h4 className="font-semibold text-foreground mb-2">Daily Updates</h4>
+                  <p className="text-muted-foreground text-sm">Get the latest job notifications updated every day</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="p-6">
+                  <TrendingUp className="h-12 w-12 text-primary mx-auto mb-4" />
+                  <h4 className="font-semibold text-foreground mb-2">Career Growth</h4>
+                  <p className="text-muted-foreground text-sm">Find opportunities that match your career aspirations</p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
@@ -247,56 +430,7 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="bg-muted border-t py-8">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div>
-                <div className="flex items-center space-x-2 mb-4">
-                  <div className="bg-primary p-1 rounded">
-                    <svg className="h-4 w-4 text-primary-foreground" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                    </svg>
-                  </div>
-                  <h4 className="font-bold text-foreground">GovJobs Portal</h4>
-                </div>
-                <p className="text-muted-foreground text-xs">
-                  Your trusted source for government job opportunities across India.
-                </p>
-              </div>
-              
-              <div>
-                <h5 className="font-semibold text-foreground mb-3 text-sm">Quick Links</h5>
-                <ul className="space-y-2 text-xs">
-                  <li><Link to="/jobs" className="text-muted-foreground hover:text-primary">All Jobs</Link></li>
-                  <li><Link to="/categories" className="text-muted-foreground hover:text-primary">Categories</Link></li>
-                  <li><Link to="/states" className="text-muted-foreground hover:text-primary">States</Link></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h5 className="font-semibold text-foreground mb-3 text-sm">Resources</h5>
-                <ul className="space-y-2 text-xs">
-                  <li><Link to="/admit-cards" className="text-muted-foreground hover:text-primary">Admit Cards</Link></li>
-                  <li><Link to="/results" className="text-muted-foreground hover:text-primary">Results</Link></li>
-                </ul>
-              </div>
-              
-              <div>
-                <h5 className="font-semibold text-foreground mb-3 text-sm">Contact</h5>
-                <p className="text-muted-foreground text-xs">
-                  For support and inquiries, please visit our help center.
-                </p>
-              </div>
-            </div>
-            
-            <div className="border-t border-border mt-6 pt-6 text-center">
-              <p className="text-muted-foreground text-xs">
-                © 2025 GovJobs Portal. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

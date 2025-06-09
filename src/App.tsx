@@ -21,25 +21,27 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <ThemeProvider defaultTheme="system" storageKey="govjobs-ui-theme">
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/jobs" element={<AllJobs />} />
-              <Route path="/jobs/:jobSlug" element={<JobDetail />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/categories/:categorySlug" element={<Categories />} />
-              <Route path="/states" element={<States />} />
-              <Route path="/states/:stateSlug" element={<States />} />
-              <Route path="/admit-cards" element={<AdmitCards />} />
-              <Route path="/results" element={<Results />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <div className="min-h-screen bg-background text-foreground">
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/jobs" element={<AllJobs />} />
+                <Route path="/jobs/:jobSlug" element={<JobDetail />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/categories/:categorySlug" element={<Categories />} />
+                <Route path="/states" element={<States />} />
+                <Route path="/states/:stateSlug" element={<States />} />
+                <Route path="/admit-cards" element={<AdmitCards />} />
+                <Route path="/results" element={<Results />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </div>
       </ThemeProvider>
     </HelmetProvider>
   </QueryClientProvider>
