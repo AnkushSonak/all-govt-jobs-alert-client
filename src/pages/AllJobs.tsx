@@ -1,5 +1,6 @@
+
 import { useState } from "react";
-import { Search, Filter, Menu, Users } from "lucide-react";
+import { Search, Filter, Menu, Users, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,8 +8,9 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { JobCard } from "@/components/JobCard";
 import { FilterSection } from "@/components/FilterSection";
 import { SEO } from "@/components/SEO";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { Link } from "react-router-dom";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 // Extended mock data for all jobs
 const allJobs = [
@@ -90,89 +92,55 @@ const AllJobs = () => {
         canonical="https://govjobs-portal.com/jobs"
       />
       
-      <div className="min-h-screen bg-background text-sm">
-        {/* Header - Improved Mobile */}
-        <header className="bg-card shadow-md border-b border-border">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <Link to="/" className="flex items-center space-x-3">
-                <div className="bg-gradient-to-r from-primary to-purple-600 p-2 rounded-lg">
-                  <svg className="h-5 md:h-6 w-5 md:w-6 text-primary-foreground" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"/>
-                  </svg>
-                </div>
-                <div>
-                  <h1 className="text-lg md:text-xl font-bold text-foreground">GovJobs Portal</h1>
-                  <p className="text-muted-foreground text-xs">Your Gateway to Government Careers</p>
-                </div>
-              </Link>
+      <div className="min-h-screen bg-background">
+        <Header 
+          showSearch={true}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onSearch={() => {}}
+        />
 
-              <div className="flex-1 md:max-w-2xl md:mx-8">
-                <div className="relative">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search all government jobs..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 h-10 bg-muted border-border"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <nav className="hidden lg:flex space-x-6 text-sm">
-                  <Link to="/" className="text-muted-foreground hover:text-primary">Home</Link>
-                  <Link to="/jobs" className="text-primary font-medium">All Jobs</Link>
-                  <Link to="/categories" className="text-muted-foreground hover:text-primary">Categories</Link>
-                  <Link to="/states" className="text-muted-foreground hover:text-primary">States</Link>
-                </nav>
-
-                <ThemeToggle />
-
-                {/* Mobile Menu */}
-                <div className="lg:hidden">
-                  <Sheet>
-                    <SheetTrigger asChild>
-                      <Button variant="outline" size="sm" className="text-sm">
-                        <Menu className="h-4 w-4 mr-2" />
-                        Menu
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent side="right" className="w-72">
-                      <SheetHeader>
-                        <SheetTitle>Navigation</SheetTitle>
-                      </SheetHeader>
-                      <nav className="flex flex-col space-y-4 mt-6">
-                        <Link to="/" className="text-muted-foreground hover:text-primary px-2 py-2">Home</Link>
-                        <Link to="/jobs" className="text-primary font-medium px-2 py-2">All Jobs</Link>
-                        <Link to="/categories" className="text-muted-foreground hover:text-primary px-2 py-2">Categories</Link>
-                        <Link to="/states" className="text-muted-foreground hover:text-primary px-2 py-2">States</Link>
-                      </nav>
-                    </SheetContent>
-                  </Sheet>
+        {/* Page Header */}
+        <section className="py-12 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">All Government Jobs</h1>
+              <p className="text-xl text-blue-100 mb-8">Browse complete list of available government job opportunities across India</p>
+              
+              {/* Search Bar */}
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-white rounded-2xl p-4 shadow-lg">
+                  <div className="flex gap-4">
+                    <div className="flex-1">
+                      <div className="relative">
+                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <Input
+                          placeholder="Search all government jobs..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="pl-12 h-12 text-lg border-0 focus:ring-2 focus:ring-blue-500 rounded-xl"
+                        />
+                      </div>
+                    </div>
+                    <Button className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                      Search
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </header>
-
-        {/* Page Header - Better Mobile */}
-        <section className="py-6 md:py-8 bg-card border-b border-border">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">All Government Jobs</h2>
-            <p className="text-muted-foreground text-sm md:text-base">Complete list of available government job opportunities</p>
-          </div>
         </section>
 
         {/* Jobs Section */}
-        <section className="py-6 md:py-8">
+        <section className="py-8">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
+            <div className="flex flex-col lg:flex-row gap-8">
               {/* Mobile Filter */}
               <div className="lg:hidden">
                 <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
                   <SheetTrigger asChild>
-                    <Button variant="outline" className="w-full mb-4 text-sm">
+                    <Button variant="outline" className="w-full mb-6 h-12 text-sm border-2 rounded-xl">
                       <Filter className="h-4 w-4 mr-2" />
                       Filter Jobs
                     </Button>
@@ -194,20 +162,20 @@ const AllJobs = () => {
                 </Sheet>
               </div>
 
-              {/* Desktop Filter with Toggle - Same as Home Page */}
+              {/* Desktop Filter */}
               <aside className={`hidden lg:block transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-1/4' : 'lg:w-auto'}`}>
                 <div className="sticky top-6">
-                  <Card className="shadow-sm border-border">
+                  <Card className="shadow-lg border-gray-200 rounded-2xl bg-white">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-                      <CardTitle className={`flex items-center gap-2 text-sm transition-all duration-300 ${!isDesktopFilterOpen ? 'hidden' : ''}`}>
-                        <Filter className="h-4 w-4" />
+                      <CardTitle className={`flex items-center gap-2 text-lg transition-all duration-300 ${!isDesktopFilterOpen ? 'hidden' : ''}`}>
+                        <Filter className="h-5 w-5" />
                         Filter Jobs
                       </CardTitle>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => setIsDesktopFilterOpen(!isDesktopFilterOpen)}
-                        className="h-8 w-8 p-0 hover:bg-muted transition-all duration-200"
+                        className="h-8 w-8 p-0 hover:bg-gray-100 transition-all duration-200 rounded-lg"
                       >
                         <Menu className="h-4 w-4" />
                       </Button>
@@ -226,32 +194,37 @@ const AllJobs = () => {
 
               {/* Jobs List */}
               <main className={`transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-3/4' : 'lg:w-full'}`}>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-3">
-                  <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground bg-muted px-3 py-2 rounded-lg">
-                    <Users className="h-3 md:h-4 w-3 md:w-4" />
-                    <span>{filteredJobs.length} jobs found</span>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                  <div>
+                    <h2 className="text-2xl font-bold text-foreground mb-2">Latest Job Opportunities</h2>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gray-50 px-4 py-2 rounded-xl border">
+                      <Users className="h-4 w-4" />
+                      <span>{filteredJobs.length} jobs found</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-3 md:space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {filteredJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                   ))}
                 </div>
 
                 {filteredJobs.length === 0 && (
-                  <div className="text-center py-12">
-                    <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Search className="h-8 w-8 text-muted-foreground" />
+                  <div className="text-center py-16">
+                    <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                      <Search className="h-10 w-10 text-gray-400" />
                     </div>
-                    <h4 className="text-lg font-semibold text-foreground mb-2">No jobs found</h4>
-                    <p className="text-muted-foreground text-sm">Try adjusting your search or filters</p>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">No jobs found</h3>
+                    <p className="text-muted-foreground">Try adjusting your search criteria or filters</p>
                   </div>
                 )}
               </main>
             </div>
           </div>
         </section>
+
+        <Footer />
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 
-import { Calendar, MapPin, Users, ExternalLink, Clock } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Calendar, MapPin, Users, ExternalLink, Clock, Building2 } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -28,61 +28,70 @@ export const JobCard = ({ job }: JobCardProps) => {
   const isUrgent = daysLeft <= 7;
 
   return (
-    <Card className="hover:shadow-lg transition-all duration-300 border border-slate-200 bg-white hover:bg-slate-50">
-      <CardHeader className="pb-2">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
+    <Card className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group">
+      <CardContent className="p-6">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+              <Building2 className="h-6 w-6 text-blue-600" />
+            </div>
+            <div className="flex-1">
               <Link 
                 to={`/jobs/${job.slug}-${job.id}`} 
-                className="text-sm font-semibold text-slate-900 hover:text-blue-600 transition-colors line-clamp-2"
+                className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors line-clamp-2 leading-tight"
               >
                 {job.title}
               </Link>
-              {job.isNew && (
-                <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs border-green-200">
-                  New
-                </Badge>
-              )}
-              {isUrgent && (
-                <Badge variant="destructive" className="animate-pulse text-xs bg-red-100 text-red-700 border-red-200">
-                  Urgent
-                </Badge>
-              )}
+              <p className="text-gray-600 text-sm mt-1">{job.department}</p>
             </div>
-            <p className="text-slate-600 font-medium text-xs">{job.department}</p>
           </div>
-          <Badge variant="outline" className="shrink-0 text-xs border-slate-200 text-slate-600 bg-slate-50">
-            {job.category}
-          </Badge>
+          <div className="flex flex-col gap-2">
+            {job.isNew && (
+              <Badge className="bg-green-100 text-green-700 border-green-200 text-xs">
+                New
+              </Badge>
+            )}
+            {isUrgent && (
+              <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200 text-xs animate-pulse">
+                Urgent
+              </Badge>
+            )}
+          </div>
         </div>
-      </CardHeader>
 
-      <CardContent className="pt-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
-          <div className="flex items-center gap-2 text-xs text-slate-600">
-            <MapPin className="h-3 w-3 text-slate-400" />
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <MapPin className="h-4 w-4 text-gray-400" />
             <span className="truncate">{job.location}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-600">
-            <Users className="h-3 w-3 text-slate-400" />
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <Users className="h-4 w-4 text-gray-400" />
             <span>{job.totalPosts} Posts</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-600">
-            <Calendar className="h-3 w-3 text-slate-400" />
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <Calendar className="h-4 w-4 text-gray-400" />
             <span className="truncate">{job.qualification}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs">
-            <Clock className="h-3 w-3 text-slate-400" />
-            <span className={isUrgent ? "text-red-600 font-medium" : "text-slate-600"}>
+          <div className="flex items-center gap-2 text-sm">
+            <Clock className="h-4 w-4 text-gray-400" />
+            <span className={isUrgent ? "text-red-600 font-medium" : "text-gray-600"}>
               {daysLeft > 0 ? `${daysLeft} days left` : "Deadline passed"}
             </span>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="text-xs border-gray-200 text-gray-600 bg-gray-50">
+            {job.category}
+          </Badge>
+          <div className="text-xs text-gray-500">
+            Deadline: {new Date(job.applyDeadline).toLocaleDateString()}
+          </div>
+        </div>
+
+        <div className="flex gap-3 mt-6">
           <Link to={`/jobs/${job.slug}-${job.id}`} className="flex-1">
-            <Button variant="outline" className="w-full text-xs h-8 border-slate-200 hover:bg-slate-100 text-slate-700">
+            <Button variant="outline" className="w-full h-10 text-sm border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl">
               View Details
             </Button>
           </Link>
@@ -92,8 +101,8 @@ export const JobCard = ({ job }: JobCardProps) => {
             rel="noopener noreferrer"
             className="flex-1"
           >
-            <Button className="w-full text-xs h-8 bg-blue-600 hover:bg-blue-700 text-white">
-              <ExternalLink className="h-3 w-3 mr-1" />
+            <Button className="w-full h-10 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+              <ExternalLink className="h-4 w-4 mr-2" />
               Apply Now
             </Button>
           </a>
