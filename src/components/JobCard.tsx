@@ -1,5 +1,5 @@
 
-import { Calendar, MapPin, Users, ExternalLink, Clock, Building2 } from "lucide-react";
+import { Calendar, MapPin, Users, ExternalLink, Building2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,86 +28,73 @@ export const JobCard = ({ job }: JobCardProps) => {
   const isUrgent = daysLeft <= 7;
 
   return (
-    <Card className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group">
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-              <Building2 className="h-6 w-6 text-blue-600" />
+    <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
+      <div className="flex items-start justify-between">
+        <div className="flex items-start space-x-4">
+          <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <Building2 className="h-6 w-6 text-gray-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-3 mb-2">
+              <h3 className="text-lg font-semibold text-gray-900 truncate">
+                <Link to={`/jobs/${job.slug}-${job.id}`} className="hover:text-blue-600">
+                  {job.title}
+                </Link>
+              </h3>
+              {job.isNew && (
+                <Badge className="bg-green-100 text-green-700 border-green-200 text-xs flex-shrink-0">
+                  New
+                </Badge>
+              )}
+              {isUrgent && (
+                <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200 text-xs flex-shrink-0">
+                  Urgent
+                </Badge>
+              )}
             </div>
-            <div className="flex-1">
-              <Link 
-                to={`/jobs/${job.slug}-${job.id}`} 
-                className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors line-clamp-2 leading-tight"
-              >
-                {job.title}
-              </Link>
-              <p className="text-gray-600 text-sm mt-1">{job.department}</p>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-600">
+              <div className="flex items-center">
+                <Building2 className="h-4 w-4 mr-1 flex-shrink-0" />
+                <span className="truncate">{job.department}</span>
+              </div>
+              <div className="flex items-center">
+                <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
+                <span className="truncate">{job.location}</span>
+              </div>
+              <div className="flex items-center">
+                <Calendar className="h-4 w-4 mr-1 flex-shrink-0" />
+                <span className="truncate">{job.qualification}</span>
+              </div>
+              <div className="flex items-center">
+                <Users className="h-4 w-4 mr-1 flex-shrink-0" />
+                <span>{job.totalPosts} positions</span>
+              </div>
+            </div>
+            
+            <div className="mt-3 flex items-center justify-between">
+              <Badge variant="outline" className="text-xs border-gray-200 text-gray-600 bg-gray-50">
+                {job.category}
+              </Badge>
+              <div className="text-xs text-gray-500">
+                Deadline: {new Date(job.applyDeadline).toLocaleDateString()}
+              </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
-            {job.isNew && (
-              <Badge className="bg-green-100 text-green-700 border-green-200 text-xs">
-                New
-              </Badge>
-            )}
-            {isUrgent && (
-              <Badge variant="destructive" className="bg-red-100 text-red-700 border-red-200 text-xs animate-pulse">
-                Urgent
-              </Badge>
-            )}
-          </div>
         </div>
-
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <MapPin className="h-4 w-4 text-gray-400" />
-            <span className="truncate">{job.location}</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Users className="h-4 w-4 text-gray-400" />
-            <span>{job.totalPosts} Posts</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Calendar className="h-4 w-4 text-gray-400" />
-            <span className="truncate">{job.qualification}</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Clock className="h-4 w-4 text-gray-400" />
-            <span className={isUrgent ? "text-red-600 font-medium" : "text-gray-600"}>
-              {daysLeft > 0 ? `${daysLeft} days left` : "Deadline passed"}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <Badge variant="outline" className="text-xs border-gray-200 text-gray-600 bg-gray-50">
-            {job.category}
-          </Badge>
-          <div className="text-xs text-gray-500">
-            Deadline: {new Date(job.applyDeadline).toLocaleDateString()}
-          </div>
-        </div>
-
-        <div className="flex gap-3 mt-6">
-          <Link to={`/jobs/${job.slug}-${job.id}`} className="flex-1">
-            <Button variant="outline" className="w-full h-10 text-sm border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl">
+        <div className="flex items-center space-x-3 flex-shrink-0 ml-4">
+          <Link to={`/jobs/${job.slug}-${job.id}`}>
+            <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-50">
               View Details
             </Button>
           </Link>
-          <a 
-            href={job.sourceUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex-1"
-          >
-            <Button className="w-full h-10 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Apply Now
+          <a href={job.sourceUrl} target="_blank" rel="noopener noreferrer">
+            <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+              <ExternalLink className="h-4 w-4 mr-1" />
+              Apply
             </Button>
           </a>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

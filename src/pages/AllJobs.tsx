@@ -92,7 +92,7 @@ const AllJobs = () => {
         canonical="https://govjobs-portal.com/jobs"
       />
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gray-50">
         <Header 
           showSearch={true}
           searchTerm={searchTerm}
@@ -101,15 +101,15 @@ const AllJobs = () => {
         />
 
         {/* Page Header */}
-        <section className="py-12 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+        <section className="py-12 bg-white border-b">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">All Government Jobs</h1>
-              <p className="text-xl text-blue-100 mb-8">Browse complete list of available government job opportunities across India</p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">All Government Jobs</h1>
+              <p className="text-xl text-gray-600 mb-8">Browse complete list of available government job opportunities across India</p>
               
               {/* Search Bar */}
               <div className="max-w-2xl mx-auto">
-                <div className="bg-white rounded-2xl p-4 shadow-lg">
+                <div className="bg-white rounded-lg border border-gray-300 p-4 shadow-sm">
                   <div className="flex gap-4">
                     <div className="flex-1">
                       <div className="relative">
@@ -118,11 +118,11 @@ const AllJobs = () => {
                           placeholder="Search all government jobs..."
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="pl-12 h-12 text-lg border-0 focus:ring-2 focus:ring-blue-500 rounded-xl"
+                          className="pl-12 h-12 text-lg border-0 focus:ring-2 focus:ring-blue-500 rounded-lg"
                         />
                       </div>
                     </div>
-                    <Button className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
+                    <Button className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
                       Search
                     </Button>
                   </div>
@@ -140,7 +140,7 @@ const AllJobs = () => {
               <div className="lg:hidden">
                 <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
                   <SheetTrigger asChild>
-                    <Button variant="outline" className="w-full mb-6 h-12 text-sm border-2 rounded-xl">
+                    <Button variant="outline" className="w-full mb-6 h-12 text-sm border border-gray-300 rounded-lg">
                       <Filter className="h-4 w-4 mr-2" />
                       Filter Jobs
                     </Button>
@@ -165,7 +165,7 @@ const AllJobs = () => {
               {/* Desktop Filter */}
               <aside className={`hidden lg:block transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-1/4' : 'lg:w-auto'}`}>
                 <div className="sticky top-6">
-                  <Card className="shadow-lg border-gray-200 rounded-2xl bg-white">
+                  <Card className="shadow-sm border border-gray-200 rounded-lg bg-white">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                       <CardTitle className={`flex items-center gap-2 text-lg transition-all duration-300 ${!isDesktopFilterOpen ? 'hidden' : ''}`}>
                         <Filter className="h-5 w-5" />
@@ -196,15 +196,15 @@ const AllJobs = () => {
               <main className={`transition-all duration-300 ${isDesktopFilterOpen ? 'lg:w-3/4' : 'lg:w-full'}`}>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
                   <div>
-                    <h2 className="text-2xl font-bold text-foreground mb-2">Latest Job Opportunities</h2>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground bg-gray-50 px-4 py-2 rounded-xl border">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Latest Job Opportunities</h2>
+                    <div className="flex items-center gap-2 text-sm text-gray-600 bg-gray-100 px-4 py-2 rounded-lg border">
                       <Users className="h-4 w-4" />
                       <span>{filteredJobs.length} jobs found</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-4">
                   {filteredJobs.map((job) => (
                     <JobCard key={job.id} job={job} />
                   ))}
@@ -212,11 +212,11 @@ const AllJobs = () => {
 
                 {filteredJobs.length === 0 && (
                   <div className="text-center py-16">
-                    <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-6">
                       <Search className="h-10 w-10 text-gray-400" />
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">No jobs found</h3>
-                    <p className="text-muted-foreground">Try adjusting your search criteria or filters</p>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">No jobs found</h3>
+                    <p className="text-gray-600">Try adjusting your search criteria or filters</p>
                   </div>
                 )}
               </main>

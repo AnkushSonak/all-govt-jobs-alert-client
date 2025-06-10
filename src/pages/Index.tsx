@@ -213,7 +213,7 @@ const Index = () => {
         canonical="https://govjobs-portal.com"
       />
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gray-50">
         <Header 
           showSearch={true}
           searchTerm={searchTerm}
@@ -221,52 +221,48 @@ const Index = () => {
           onSearch={handleSearch}
         />
 
-        {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIxLjUiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
-          <div className="container mx-auto px-4 relative">
+        {/* Hero Section - Clean and Minimal */}
+        <section className="bg-white py-16 border-b">
+          <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                Government Job Board for 
-                <span className="text-yellow-300"> All Sectors</span>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                Job Board for Government Jobs
               </h1>
-              <p className="text-xl md:text-2xl mb-8 text-blue-100 leading-relaxed">
-                Discover thousands of government job opportunities across India. From banking to railways, 
-                find your perfect career match with official notifications and direct application links.
+              <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+                Find your next government career opportunity from thousands of job listings across India. Apply to top government positions today.
               </p>
               
-              {/* Enhanced Search Bar */}
-              <div className="max-w-3xl mx-auto mb-10">
-                <div className="bg-white rounded-2xl p-4 shadow-2xl">
-                  <div className="flex flex-col md:flex-row gap-4">
+              {/* Search Bar */}
+              <div className="max-w-2xl mx-auto mb-12">
+                <div className="bg-white rounded-lg border border-gray-300 p-4 shadow-sm">
+                  <div className="flex gap-4">
                     <div className="flex-1">
                       <div className="relative">
                         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                         <Input
-                          placeholder="Search for government jobs, departments, or locations..."
+                          placeholder="Search government jobs..."
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
-                          className="pl-12 h-14 text-lg border-0 focus:ring-2 focus:ring-blue-500 rounded-xl"
+                          className="pl-12 h-12 text-lg border-0 focus:ring-2 focus:ring-blue-500 rounded-lg"
                         />
                       </div>
                     </div>
                     <Button 
                       onClick={handleSearch}
-                      className="h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
+                      className="h-12 px-8 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-lg font-medium"
                     >
-                      Search Jobs
+                      Search
                     </Button>
                   </div>
                 </div>
               </div>
               
               {/* Quick Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
                 {stats.map((stat, index) => (
-                  <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                    <stat.icon className="h-8 w-8 text-yellow-300 mx-auto mb-3" />
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-sm text-blue-100">{stat.label}</div>
+                  <div key={index} className="text-center">
+                    <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                    <div className="text-sm text-gray-600">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -274,146 +270,144 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Trusted By Section */}
-        <section className="py-8 bg-white border-b">
+        {/* Featured Jobs Section */}
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <div className="text-center">
-              <p className="text-muted-foreground text-sm mb-4">Trusted by leading government organizations</p>
-              <div className="flex items-center justify-center space-x-8 opacity-60">
-                <div className="h-8 bg-muted rounded flex items-center px-4 text-xs font-medium">SBI</div>
-                <div className="h-8 bg-muted rounded flex items-center px-4 text-xs font-medium">Indian Railways</div>
-                <div className="h-8 bg-muted rounded flex items-center px-4 text-xs font-medium">AIIMS</div>
-                <div className="h-8 bg-muted rounded flex items-center px-4 text-xs font-medium">ISRO</div>
-                <div className="h-8 bg-muted rounded flex items-center px-4 text-xs font-medium">UPSC</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Jobs */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Featured Jobs</h2>
-              <p className="text-muted-foreground text-lg">Hand-picked opportunities from top government departments</p>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-gray-900">Featured jobs</h2>
+              <Link to="/jobs">
+                <Button variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+                  View all
+                </Button>
+              </Link>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="space-y-4">
               {featuredJobs.map((job) => (
-                <div key={job.id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <div key={job.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                         <Building2 className="h-6 w-6 text-blue-600" />
                       </div>
-                      {job.isNew && (
-                        <Badge className="bg-green-100 text-green-700 border-green-200">
-                          New
-                        </Badge>
-                      )}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            <Link to={`/jobs/${job.slug}-${job.id}`} className="hover:text-blue-600">
+                              {job.title}
+                            </Link>
+                          </h3>
+                          {job.isNew && (
+                            <Badge className="bg-green-100 text-green-700 border-green-200 text-xs">
+                              New
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="flex items-center space-x-6 text-sm text-gray-600">
+                          <div className="flex items-center">
+                            <Building2 className="h-4 w-4 mr-1" />
+                            {job.department}
+                          </div>
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            {job.location}
+                          </div>
+                          <div className="flex items-center">
+                            <Calendar className="h-4 w-4 mr-1" />
+                            {job.qualification}
+                          </div>
+                          <div className="flex items-center">
+                            <Users className="h-4 w-4 mr-1" />
+                            {job.totalPosts} positions
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <h3 className="text-lg font-semibold text-foreground mb-2 line-clamp-2">{job.title}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">{job.department}</p>
-                    
-                    <div className="space-y-2 mb-6">
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4 mr-2" />
-                        <span>{job.location}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        <span>Deadline: {new Date(job.applyDeadline).toLocaleDateString()}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <Users className="h-4 w-4 mr-2" />
-                        <span>{job.totalPosts} positions</span>
-                      </div>
+                    <div className="flex items-center space-x-3">
+                      <Link to={`/jobs/${job.slug}-${job.id}`}>
+                        <Button variant="outline" size="sm" className="border-gray-300">
+                          View Details
+                        </Button>
+                      </Link>
+                      <a href={job.sourceUrl} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                          Apply
+                        </Button>
+                      </a>
                     </div>
-                    
-                    <Link to={`/jobs/${job.slug}-${job.id}`}>
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl">
-                        View Details
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </Link>
                   </div>
                 </div>
               ))}
             </div>
-            
-            <div className="text-center">
-              <Link to="/jobs">
-                <Button variant="outline" size="lg" className="px-8 py-3 rounded-xl border-2 hover:bg-blue-50">
-                  View All Featured Jobs
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
           </div>
         </section>
 
-        {/* All Jobs Section */}
-        <section className="py-16">
+        {/* Latest Jobs Section */}
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-3xl font-bold text-foreground mb-2">Latest Jobs</h2>
-                <p className="text-muted-foreground">Complete list of latest government job opportunities</p>
-              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Latest jobs</h2>
               <Link to="/jobs">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl">
-                  View All {mockJobs.length}+ Jobs
-                  <ArrowRight className="h-4 w-4 ml-2" />
+                <Button variant="outline" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+                  View all
                 </Button>
               </Link>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
               {mockJobs.slice(0, 10).map((job) => (
-                <div key={job.id} className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <Building2 className="h-5 w-5 text-blue-600" />
+                <div key={job.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <Building2 className="h-6 w-6 text-gray-600" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            <Link to={`/jobs/${job.slug}-${job.id}`} className="hover:text-blue-600">
+                              {job.title}
+                            </Link>
+                          </h3>
+                          {job.isNew && (
+                            <Badge className="bg-green-100 text-green-700 border-green-200 text-xs">
+                              New
+                            </Badge>
+                          )}
                         </div>
-                        <div>
-                          <h3 className="font-semibold text-foreground text-sm">{job.title}</h3>
-                          <p className="text-muted-foreground text-xs">{job.department}</p>
+                        <div className="flex items-center space-x-6 text-sm text-gray-600">
+                          <div className="flex items-center">
+                            <Building2 className="h-4 w-4 mr-1" />
+                            {job.department}
+                          </div>
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            {job.location}
+                          </div>
+                          <div className="flex items-center">
+                            <Calendar className="h-4 w-4 mr-1" />
+                            Deadline: {new Date(job.applyDeadline).toLocaleDateString()}
+                          </div>
+                          <div className="flex items-center">
+                            <Users className="h-4 w-4 mr-1" />
+                            {job.totalPosts} positions
+                          </div>
                         </div>
                       </div>
                     </div>
-                    {job.isNew && (
-                      <Badge variant="secondary" className="bg-green-100 text-green-700 text-xs">
-                        New
-                      </Badge>
-                    )}
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4 mb-4 text-xs text-muted-foreground">
-                    <div className="flex items-center">
-                      <MapPin className="h-3 w-3 mr-1" />
-                      <span>{job.location}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      <span>{new Date(job.applyDeadline).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Users className="h-3 w-3 mr-1" />
-                      <span>{job.totalPosts} posts</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Badge variant="outline" className="text-xs">{job.category}</Badge>
+                    <div className="flex items-center space-x-3">
+                      <Link to={`/jobs/${job.slug}-${job.id}`}>
+                        <Button variant="outline" size="sm" className="border-gray-300">
+                          View Details
+                        </Button>
+                      </Link>
+                      <a href={job.sourceUrl} target="_blank" rel="noopener noreferrer">
+                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                          Apply
+                        </Button>
+                      </a>
                     </div>
                   </div>
-                  
-                  <Link to={`/jobs/${job.slug}-${job.id}`}>
-                    <Button variant="outline" className="w-full text-xs h-8 rounded-lg hover:bg-blue-50 border-blue-200">
-                      View Details
-                    </Button>
-                  </Link>
                 </div>
               ))}
             </div>
@@ -421,7 +415,7 @@ const Index = () => {
         </section>
 
         {/* Job Categories */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-foreground mb-4">Browse by Category</h2>
@@ -443,7 +437,7 @@ const Index = () => {
         </section>
 
         {/* Information Section */}
-        <section className="py-16">
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-8">
