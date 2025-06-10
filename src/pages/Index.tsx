@@ -1,18 +1,12 @@
-
 import { useState, useEffect } from "react";
-import { MapPin, Calendar, Building2, Users, Filter, Menu, Bell, Star, TrendingUp, Briefcase, ArrowRight, Search } from "lucide-react";
+import { MapPin, Calendar, Building2, Users, Search, Briefcase, TrendingUp, Bell, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { JobCard } from "@/components/JobCard";
-import { FilterSection } from "@/components/FilterSection";
-import { SearchBar } from "@/components/SearchBar";
-import { SEO } from "@/components/SEO";
+import { SEOOptimized } from "@/components/SEOOptimized";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { generateWebsiteStructuredData } from "@/utils/structuredData";
+import { generateWebsiteStructuredData, generateOrganizationStructuredData } from "@/utils/enhancedStructuredData";
 import { Link } from "react-router-dom";
 
 // Mock data - in real implementation, this would come from your PostgreSQL database
@@ -169,7 +163,6 @@ const stats = [
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   // Simulate loading
@@ -187,6 +180,13 @@ const Index = () => {
 
   const pageTitle = "Latest Government Jobs 2025 - Banking, Railways, SSC, UPSC | GovJobs Portal";
   const pageDescription = "Find latest government job notifications across India. 500+ current openings in Banking, Railways, SSC, UPSC, and State Government jobs with official application links.";
+  const keywords = "government jobs 2025, sarkari naukri, banking jobs, railway jobs, SSC jobs, UPSC jobs, latest government vacancy, india government jobs";
+
+  // Enhanced structured data
+  const combinedStructuredData = [
+    generateWebsiteStructuredData(),
+    generateOrganizationStructuredData()
+  ];
 
   if (isLoading) {
     return (
@@ -204,13 +204,16 @@ const Index = () => {
 
   return (
     <>
-      <SEO 
+      <SEOOptimized 
         title={pageTitle}
         description={pageDescription}
         url="https://govjobs-portal.com"
         type="website"
-        structuredData={generateWebsiteStructuredData()}
+        keywords={keywords}
+        structuredData={combinedStructuredData}
         canonical="https://govjobs-portal.com"
+        publishedTime={new Date().toISOString()}
+        modifiedTime={new Date().toISOString()}
       />
       
       <div className="min-h-screen bg-gray-50">
