@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { MapPin, Calendar, Building2, Users, Search, Briefcase, TrendingUp, Bell, Star, ArrowRight, Sparkles } from "lucide-react";
+import { MapPin, Calendar, Building2, Users, Search, Briefcase, TrendingUp, Bell, Star, ArrowRight, Sparkles, Clock, Award, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -150,19 +150,40 @@ const mockJobs = [
 const featuredJobs = mockJobs.slice(0, 3);
 
 const categories = [
-  { name: "Banking", count: 150, icon: "🏦" },
-  { name: "Railways", count: 200, icon: "🚆" },
-  { name: "SSC", count: 180, icon: "📚" },
-  { name: "UPSC", count: 45, icon: "🏛️" },
-  { name: "Healthcare", count: 120, icon: "🏥" },
-  { name: "Defense", count: 90, icon: "⚔️" }
+  { name: "Banking", count: 150, icon: "🏦", color: "from-blue-500 to-blue-600" },
+  { name: "Railways", count: 200, icon: "🚆", color: "from-green-500 to-green-600" },
+  { name: "SSC", count: 180, icon: "📚", color: "from-purple-500 to-purple-600" },
+  { name: "UPSC", count: 45, icon: "🏛️", color: "from-orange-500 to-orange-600" },
+  { name: "Healthcare", count: 120, icon: "🏥", color: "from-red-500 to-red-600" },
+  { name: "Defense", count: 90, icon: "⚔️", color: "from-gray-500 to-gray-600" }
 ];
 
 const stats = [
-  { label: "Active Jobs", value: "2,450+", icon: Briefcase },
-  { label: "Government Departments", value: "150+", icon: Users },
-  { label: "States Covered", value: "28", icon: MapPin },
-  { label: "Success Rate", value: "85%", icon: TrendingUp }
+  { label: "Active Jobs", value: "2,450+", icon: Briefcase, color: "text-blue-600" },
+  { label: "Government Departments", value: "150+", icon: Building2, color: "text-green-600" },
+  { label: "States Covered", value: "28", icon: MapPin, color: "text-purple-600" },
+  { label: "Success Rate", value: "85%", icon: TrendingUp, color: "text-orange-600" }
+];
+
+const features = [
+  {
+    icon: Shield,
+    title: "100% Verified Jobs",
+    description: "All job postings are verified from official government sources and updated in real-time for accuracy.",
+    color: "from-blue-500 to-cyan-500"
+  },
+  {
+    icon: Bell,
+    title: "Instant Notifications",
+    description: "Get the latest job alerts and deadline reminders delivered instantly to never miss an opportunity.",
+    color: "from-green-500 to-emerald-500"
+  },
+  {
+    icon: Award,
+    title: "Career Growth",
+    description: "Find opportunities that match your qualifications and accelerate your government career journey.",
+    color: "from-purple-500 to-pink-500"
+  }
 ];
 
 const Index = () => {
@@ -194,14 +215,14 @@ const Index = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-6 animate-fade-in">
           <div className="relative">
             <div className="w-20 h-20 bg-gradient-to-r from-primary to-purple-600 rounded-2xl mx-auto animate-pulse shadow-lg"></div>
             <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-bounce"></div>
           </div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Loading GovJobs Portal...</h2>
-          <div className="w-64 h-2 bg-slate-700 rounded-full mx-auto overflow-hidden">
+          <div className="w-64 h-2 bg-muted rounded-full mx-auto overflow-hidden">
             <div className="w-full h-full bg-gradient-to-r from-primary to-purple-600 rounded-full animate-pulse"></div>
           </div>
         </div>
@@ -210,7 +231,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-background">
       <SEOOptimized 
         title={pageTitle}
         description={pageDescription}
@@ -230,74 +251,60 @@ const Index = () => {
         onSearch={handleSearch}
       />
 
-      {/* Hero Section - Modern Dark Design */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-20">
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
-        
-        {/* Geometric decoration */}
-        <div className="absolute top-20 right-20 w-64 h-64 opacity-10">
-          <div className="w-full h-full border border-primary/30 rounded-full animate-pulse"></div>
-          <div className="absolute top-8 left-8 w-48 h-48 border border-purple-500/30 rounded-full animate-pulse delay-300"></div>
-          <div className="absolute top-16 left-16 w-32 h-32 border border-blue-500/30 rounded-full animate-pulse delay-700"></div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Hero Section */}
+      <section className="relative py-24 bg-gradient-to-br from-primary/5 via-background to-purple-50/30">
+        <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-slate-800/50 backdrop-blur-sm rounded-full px-4 py-2 mb-6 animate-fade-in border border-slate-600">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-slate-200">India&apos;s #1 Government Job Portal</span>
-            </div>
+            <Badge className="mb-6 bg-gradient-to-r from-primary to-purple-600 text-white border-0 animate-fade-in">
+              <Sparkles className="h-4 w-4 mr-2" />
+              India's #1 Government Job Portal
+            </Badge>
             
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight animate-slide-in-up">
-              The Future of
-              <span className="block bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
-                Government Careers
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight animate-slide-in-up">
+              Find Your Perfect
+              <span className="block bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                Government Job
               </span>
-              Is Here
             </h1>
             
-            <p className="text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto animate-slide-in-up" style={{animationDelay: '0.2s'}}>
+            <p className="text-xl text-muted-foreground mb-12 leading-relaxed max-w-2xl mx-auto animate-slide-in-up" style={{animationDelay: '0.2s'}}>
               Discover thousands of verified government job opportunities across India. From banking to railways, find your perfect government position today.
             </p>
             
-            {/* Enhanced Search Bar */}
-            <div className="max-w-2xl mx-auto mb-12 animate-slide-in-up" style={{animationDelay: '0.4s'}}>
-              <Card className="bg-slate-800/50 backdrop-blur-md border-slate-600 shadow-2xl">
-                <CardContent className="p-6">
-                  <div className="flex gap-4">
-                    <div className="flex-1">
-                      <div className="relative">
-                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
-                        <Input
-                          placeholder="Search government jobs by department, location, or keyword..."
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          className="pl-12 h-14 text-lg bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 focus:bg-slate-700 focus:border-primary rounded-xl backdrop-blur-sm"
-                        />
-                      </div>
+            {/* Search Bar */}
+            <Card className="max-w-2xl mx-auto mb-16 animate-slide-in-up" style={{animationDelay: '0.4s'}}>
+              <CardContent className="p-6">
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <div className="relative">
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                      <Input
+                        placeholder="Search government jobs by department, location, or keyword..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-12 h-14 text-lg"
+                      />
                     </div>
-                    <Button 
-                      onClick={handleSearch}
-                      className="h-14 px-8 bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                    >
-                      <Search className="h-5 w-5 mr-2" />
-                      Search Jobs
-                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                  <Button 
+                    onClick={handleSearch}
+                    className="h-14 px-8 bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white text-lg font-semibold"
+                  >
+                    <Search className="h-5 w-5 mr-2" />
+                    Search
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
             
-            {/* Enhanced Stats - Card Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto animate-slide-in-up" style={{animationDelay: '0.6s'}}>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 animate-slide-in-up" style={{animationDelay: '0.6s'}}>
               {stats.map((stat, index) => (
-                <Card key={index} className="bg-slate-800/50 backdrop-blur-sm border-slate-600 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 group">
+                <Card key={index} className="hover:shadow-lg transition-all duration-300 hover:scale-105">
                   <CardContent className="p-6 text-center">
-                    <stat.icon className="h-8 w-8 text-primary mx-auto mb-3 group-hover:scale-110 transition-transform duration-300" />
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-sm text-slate-400">{stat.label}</div>
+                    <stat.icon className={`h-8 w-8 mx-auto mb-3 ${stat.color}`} />
+                    <div className="text-2xl font-bold">{stat.value}</div>
+                    <div className="text-sm text-muted-foreground">{stat.label}</div>
                   </CardContent>
                 </Card>
               ))}
@@ -306,22 +313,20 @@ const Index = () => {
         </div>
       </section>
 
-      <Separator className="bg-slate-700" />
+      <Separator />
 
-      {/* Featured Jobs Section - Card Layout */}
-      <section className="py-20 bg-slate-900 relative">
-        <div className="container mx-auto px-4 relative">
+      {/* Featured Jobs Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-gradient-to-r from-primary to-purple-600 text-white border-0">Featured</Badge>
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Premium Job Opportunities
-            </h2>
-            <p className="text-xl text-slate-400">Handpicked positions from top government departments</p>
+            <h2 className="text-4xl font-bold mb-4">Premium Job Opportunities</h2>
+            <p className="text-xl text-muted-foreground">Handpicked positions from top government departments</p>
           </div>
           
           <div className="space-y-6 max-w-6xl mx-auto">
             {featuredJobs.map((job, index) => (
-              <div key={job.id} className="group animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
+              <div key={job.id} className="animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
                 <JobCard job={job} />
               </div>
             ))}
@@ -329,7 +334,7 @@ const Index = () => {
           
           <div className="text-center mt-12">
             <Link to="/jobs">
-              <Button className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <Button className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-8 py-3 text-lg font-semibold">
                 View All Jobs
                 <ArrowRight className="h-5 w-5 ml-2" />
               </Button>
@@ -338,27 +343,25 @@ const Index = () => {
         </div>
       </section>
 
-      <Separator className="bg-slate-700" />
+      <Separator />
 
-      {/* Job Categories - Modern Grid */}
-      <section className="py-20 bg-slate-800">
+      {/* Job Categories Section */}
+      <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge className="mb-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0">Categories</Badge>
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Browse by Department
-            </h2>
-            <p className="text-xl text-slate-400">Find opportunities in your field of expertise</p>
+            <h2 className="text-4xl font-bold mb-4">Browse by Department</h2>
+            <p className="text-xl text-muted-foreground">Find opportunities in your field of expertise</p>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
             {categories.map((category, index) => (
               <Link to={`/categories/${category.name.toLowerCase()}`} key={index}>
-                <Card className="group animate-fade-in bg-slate-900/50 border-slate-600 hover:bg-slate-700/50 transition-all duration-500 hover:scale-110 hover:border-primary/50" style={{animationDelay: `${index * 0.1}s`}}>
+                <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
                   <CardContent className="p-8 text-center">
                     <div className="text-5xl mb-6 group-hover:scale-125 transition-transform duration-300">{category.icon}</div>
-                    <h3 className="font-bold text-white mb-2 text-lg">{category.name}</h3>
-                    <p className="text-slate-400 text-sm">
+                    <h3 className="font-bold mb-2 text-lg">{category.name}</h3>
+                    <p className="text-sm text-muted-foreground">
                       <span className="font-semibold text-primary">{category.count}</span> jobs available
                     </p>
                   </CardContent>
@@ -369,22 +372,20 @@ const Index = () => {
         </div>
       </section>
 
-      <Separator className="bg-slate-700" />
+      <Separator />
 
-      {/* Latest Jobs Section - Modern Layout */}
-      <section className="py-20 bg-slate-900">
+      {/* Latest Jobs Section */}
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge className="mb-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white border-0">Latest</Badge>
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Recently Posted Jobs
-            </h2>
-            <p className="text-xl text-slate-400">Fresh opportunities updated daily</p>
+            <h2 className="text-4xl font-bold mb-4">Recently Posted Jobs</h2>
+            <p className="text-xl text-muted-foreground">Fresh opportunities updated daily</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {mockJobs.slice(0, 8).map((job, index) => (
-              <div key={job.id} className="group animate-fade-in" style={{animationDelay: `${index * 0.05}s`}}>
+              <div key={job.id} className="animate-fade-in" style={{animationDelay: `${index * 0.05}s`}}>
                 <JobCard job={job} />
               </div>
             ))}
@@ -392,7 +393,7 @@ const Index = () => {
           
           <div className="text-center mt-12">
             <Link to="/jobs">
-              <Button className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <Button className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-8 py-3 text-lg font-semibold">
                 View All Latest Jobs
                 <ArrowRight className="h-5 w-5 ml-2" />
               </Button>
@@ -401,81 +402,58 @@ const Index = () => {
         </div>
       </section>
 
-      <Separator className="bg-slate-700" />
+      <Separator />
 
-      {/* Information Section - Card Grid */}
-      <section className="py-20 bg-slate-800">
+      {/* Features Section */}
+      <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Why Choose GovJobs Portal?
-            </h2>
-            <p className="text-xl text-slate-400">Your trusted partner for government career success</p>
+            <h2 className="text-4xl font-bold mb-4">Why Choose GovJobs Portal?</h2>
+            <p className="text-xl text-muted-foreground">Your trusted partner for government career success</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="bg-slate-900/50 border-slate-600 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 group animate-fade-in">
-              <CardContent className="p-8 text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <Star className="h-10 w-10 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">100% Verified Jobs</h3>
-                <p className="text-slate-400 leading-relaxed">All job postings are verified from official government sources and updated in real-time for accuracy.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-slate-900/50 border-slate-600 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 group animate-fade-in" style={{animationDelay: '0.1s'}}>
-              <CardContent className="p-8 text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <Bell className="h-10 w-10 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">Instant Notifications</h3>
-                <p className="text-slate-400 leading-relaxed">Get the latest job alerts and deadline reminders delivered instantly to never miss an opportunity.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-slate-900/50 border-slate-600 hover:bg-slate-700/50 transition-all duration-300 hover:scale-105 group animate-fade-in" style={{animationDelay: '0.2s'}}>
-              <CardContent className="p-8 text-center">
-                <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                  <TrendingUp className="h-10 w-10 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-4">Career Growth</h3>
-                <p className="text-slate-400 leading-relaxed">Find opportunities that match your qualifications and accelerate your government career journey.</p>
-              </CardContent>
-            </Card>
+            {features.map((feature, index) => (
+              <Card key={index} className="hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
+                <CardHeader className="text-center">
+                  <div className={`w-20 h-20 bg-gradient-to-r ${feature.color} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                    <feature.icon className="h-10 w-10 text-white" />
+                  </div>
+                  <CardTitle className="text-2xl mb-4">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground leading-relaxed text-center">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      <Separator className="bg-slate-700" />
+      <Separator />
 
-      {/* Newsletter - Enhanced Dark Design */}
-      <section className="relative py-20 bg-slate-900 overflow-hidden">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
-        <div className="container mx-auto px-4 relative">
-          <Card className="max-w-3xl mx-auto bg-slate-800/50 border-slate-600 backdrop-blur-sm">
+      {/* Newsletter Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <Card className="max-w-3xl mx-auto">
             <CardContent className="p-12 text-center">
-              <div className="w-20 h-20 bg-slate-700/50 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 animate-bounce-gentle border border-slate-600">
+              <div className="w-20 h-20 bg-muted rounded-3xl flex items-center justify-center mx-auto mb-8">
                 <Bell className="h-10 w-10 text-primary" />
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-                Never Miss Your Dream Job
-              </h2>
-              <p className="text-xl text-slate-300 mb-10 leading-relaxed">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">Never Miss Your Dream Job</h2>
+              <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
                 Join 100,000+ job seekers who trust us for the latest government job notifications and career guidance.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
                 <Input 
                   placeholder="Enter your email address" 
-                  className="flex-1 h-14 bg-slate-700/50 border-slate-600 text-white placeholder:text-slate-400 rounded-xl text-lg focus:bg-slate-700 focus:border-primary"
+                  className="flex-1 h-14 text-lg"
                 />
-                <Button className="h-14 px-8 bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white font-bold rounded-xl text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <Button className="h-14 px-8 bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white font-bold text-lg">
                   Subscribe Now
                 </Button>
               </div>
-              <p className="text-sm text-slate-400 mt-4">
+              <p className="text-sm text-muted-foreground mt-4">
                 ✨ Free forever • 📧 No spam • 🔐 Unsubscribe anytime
               </p>
             </CardContent>
