@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { SEOOptimized } from "@/components/SEOOptimized";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { JobCard } from "@/components/JobCard";
 import { generateWebsiteStructuredData, generateOrganizationStructuredData } from "@/utils/enhancedStructuredData";
 import { Link } from "react-router-dom";
 
@@ -230,7 +231,7 @@ const Index = () => {
 
         {/* Hero Section - Enhanced Design */}
         <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-primary to-purple-600 text-white py-20">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"2\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
           <div className="container mx-auto px-4 relative">
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 animate-fade-in">
@@ -307,62 +308,7 @@ const Index = () => {
             <div className="space-y-6 max-w-6xl mx-auto">
               {featuredJobs.map((job, index) => (
                 <div key={job.id} className="group animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
-                  <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-200 dark:border-slate-700 p-8 hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-600"></div>
-                    
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start space-x-6 flex-1">
-                        <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <Building2 className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-4 mb-3">
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
-                              <Link to={`/jobs/${job.slug}-${job.id}`}>
-                                {job.title}
-                              </Link>
-                            </h3>
-                            {job.isNew && (
-                              <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 animate-pulse">
-                                New
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600 dark:text-gray-300">
-                            <div className="flex items-center">
-                              <Building2 className="h-4 w-4 mr-2 text-primary" />
-                              {job.department}
-                            </div>
-                            <div className="flex items-center">
-                              <MapPin className="h-4 w-4 mr-2 text-primary" />
-                              {job.location}
-                            </div>
-                            <div className="flex items-center">
-                              <Calendar className="h-4 w-4 mr-2 text-primary" />
-                              {job.qualification}
-                            </div>
-                            <div className="flex items-center">
-                              <Users className="h-4 w-4 mr-2 text-primary" />
-                              {job.totalPosts} positions
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Link to={`/jobs/${job.slug}-${job.id}`}>
-                          <Button variant="outline" size="sm" className="border-gray-300 hover:border-primary hover:text-primary transition-colors">
-                            View Details
-                          </Button>
-                        </Link>
-                        <a href={job.sourceUrl} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                            Apply Now
-                            <ArrowRight className="h-4 w-4 ml-1" />
-                          </Button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                  <JobCard job={job} />
                 </div>
               ))}
             </div>
@@ -422,56 +368,7 @@ const Index = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
               {mockJobs.slice(0, 8).map((job, index) => (
                 <div key={job.id} className="group animate-fade-in" style={{animationDelay: `${index * 0.05}s`}}>
-                  <div className="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-6 hover:shadow-xl transition-all duration-300 hover:scale-[1.02] relative">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-start space-x-4 flex-1">
-                        <div className="w-12 h-12 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 rounded-lg flex items-center justify-center">
-                          <Building2 className="h-6 w-6 text-gray-600 dark:text-gray-300" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
-                              <Link to={`/jobs/${job.slug}-${job.id}`}>
-                                {job.title}
-                              </Link>
-                            </h3>
-                            {job.isNew && (
-                              <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 text-xs">
-                                New
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                            <div className="flex items-center">
-                              <MapPin className="h-4 w-4 mr-2 text-primary" />
-                              {job.location}
-                            </div>
-                            <div className="flex items-center">
-                              <Calendar className="h-4 w-4 mr-2 text-primary" />
-                              Deadline: {new Date(job.applyDeadline).toLocaleDateString()}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Badge variant="outline" className="text-xs border-primary/20 text-primary">
-                        {job.category}
-                      </Badge>
-                      <div className="flex items-center space-x-2">
-                        <Link to={`/jobs/${job.slug}-${job.id}`}>
-                          <Button variant="outline" size="sm" className="border-gray-300 hover:border-primary hover:text-primary">
-                            Details
-                          </Button>
-                        </Link>
-                        <a href={job.sourceUrl} target="_blank" rel="noopener noreferrer">
-                          <Button size="sm" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white">
-                            Apply
-                          </Button>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
+                  <JobCard job={job} />
                 </div>
               ))}
             </div>
@@ -525,7 +422,7 @@ const Index = () => {
 
         {/* Newsletter - Enhanced */}
         <section className="relative py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.05\"%3E%3Cpath d=\"M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
           <div className="container mx-auto px-4 relative">
             <div className="max-w-3xl mx-auto text-center">
               <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-8 animate-bounce-gentle">
